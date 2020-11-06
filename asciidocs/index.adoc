@@ -1,0 +1,149 @@
+= My Project
+firstname lastname
+1.1.0, yyyy-mm-dd: Some notes
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc] ‏ ‏ ‎
+icon:github-square[link=https://github.com/htl-leonding-college/asciidoctor-docker-template] ‏ ‏ ‎
+//icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Projektauftrag
+=== Projektbezeichnung
+Europäische Urwaldroute
+
+=== Problemstellung / Projektauslöser / Vorprojekt
+In der Vergangenheit kam es öfters vor, dass durch motivierte Wanderer die Vegetation verschmutzt und zerstört wurde,
+indem sie unmakierte/unoffizielle Wege nahmen.
+Um die Tiere und Organismen in solchen Gebieten in Zukunft zu schützen wird eine Software entwickelt.
+
+=== Aufgabenstellung (Projektergebnis / Leistung / Softwareprodukt)
+
+==== Projekthauptaufgaben: Funktionalität "Was kann das Softwareprodukt"
+
+- offizielle Wanderwege schaffen
+- Bilder zu Standorten zuordnen
+- Koordinatenpunkte verknüpfen
+- funktioniert über GPS  (Internet Verbindung wird nicht benötigt)
+
+
+==== Was kann das Softwareprodukt nicht
+
+- ohne GPS Integrität exisiteren
+
+=== Projektziele (Leistungswirkung)
+
+Das Ziel dieser Software ist, die Umwelt zu schützen und dabei noch
+schöne Erinnerungen in Gestalt eines Fotoalbums zu schaffen.
+
+=== Projektphasen / Meilensteine
+
+. **02.10.2020:** grobe Ideen (Brain-storming)
+. **09.10.2020:** Erstellung des Projekt-Auftrags
+
+=== Projektstart
+
+am 25.09.2020 entschieden wir uns dieses Projekt zu bearbeiten.
+
+=== Projektende
+
+Wurde noch nicht festgelegt.
+
+=== Projektresourcen (Tabelle, wie in Buchvorlage)
+
+- da es sich um eine Swift Applikation handelt,
+benötigt der Benutzer ein Gerät mit IOS System.
+- das Gerät braucht GPS Integrität
+- Kamera mit Speichermedium
+
+NOTE: Preis variiert stark, je nachdem welches Smartphone zur Verfügung steht.
+
+==== Infrastruktur
+
+==== Personal
+
+- Jakob Ratzenböck
+- Adrian Moser
+- Silvio Kalinke
+
+==== Material
+
+==== sonstige Anwendungen
+
+
+== Pflichtenheft "Was mache ich"
+
+
+=== Ausgangssituation
+
+Das unabhängige Familienunternehmen namens Ostwind welches
+moderne Wind- und Solarparks europaweit projektiert und errichtet
+hat Ihre Stammorte in Frankreich und Deutschland verteilt.
+
+In der Vergangenheit haben sie schon 603 Windkraftanlagen mit 1085
+Megawatt Leistung geplant, gebaut und ans Netz gebracht. Energiekonsumenten welche
+Wert auf ökonomische Energie legen, können sich diesen Wunsch bei Ostwind
+erfüllen lassen.
+
+=== Istzustand
+----
+Beschreibung der speziellen Situation zB in der Abteilung
+----
+=== Problemstellung
+=== Aufgabenstellung
+==== Funktionale Anforderungen
+
+[plantuml,wireframe,png]
+----
+@startsalt
+{
+Name         | "                 "
+Modifiers:   | { (X) public | () default | () private | () protected
+	            [] abstract | [] final   | [] static }
+Superclass:  | { "java.lang.Object " | [Browse...] }
+}
+@endsalt
+----
+==== Nichtfunktionale Anforderungen (NFA)
+=== Ziele
+=== Mengengerüst
+=== Rahmenbedingungen
+zB Vorgaben vom Auftraggeber
+
+== Entwurf "Wie mache ich es"
+=== Systemarchitektur
+=== ...
+
+== Projekthandbuch "Organisatorische Rahmenbedingungen"
+
+=== GANTT-Diagramm
+
+mit User-Stories (definiert in YouTrack)
+
+[plantuml,gantt-protoype,png]
+----
+@startuml
+[Test prototype] lasts 10 days
+[Prototype completed] happens at [Test prototype]'s end
+[Setup assembly line] lasts 12 days
+[Setup assembly line] starts at [Test prototype]'s end
+[Test prototype 2] lasts 3 days
+[Test prototype 2] starts at [Prototype completed]'s end
+@enduml
+----
+
+* link:minutes-of-meeting.html[Protokollvorlage]
+* link:demo.html[Demo]
+
