@@ -1,7 +1,7 @@
-== Pflichtenheft "Was mache ich"
+== 1. Pflichtenheft
 
 
-=== Ausgangssituation
+=== 1.1 Ausgangssituation
 
 Das unabhängige Familienunternehmen namens Ostwind welches
 moderne Wind- und Solarparks europaweit projektiert und errichtet
@@ -12,11 +12,7 @@ Megawatt Leistung geplant, gebaut und ans Netz gebracht. Energiekonsumenten welc
 Wert auf ökonomische Energie legen, können sich diesen Wunsch bei Ostwind
 erfüllen lassen.
 
-=== Istzustand
-
-
-
-=== Problemstellung
+=== 1.2 Istzustand
 
 In der Vergangenheit kam es öfters vor, dass durch motivierte
 Wanderer die Vegetation verschmutzt und zerstört wurde,
@@ -25,7 +21,20 @@ Um die Bäume und das Umfeld in solchen Gebieten in Zukunft
 zu schützen wird eine Software entwickelt, die als Profit
 für die Einwohner wegen des darauffolgenden Tourismus dient.
 
-=== Aufgabenstellung
+=== 1.3 Problemstellung
+
+Um die Route des zurückgelegten Weges visualisieren zu können, werden die Koordinatenpunkte
+der zu bewandernden Pfade bei einer Person der Organisation angefragt.
+
+=== 1.4 Aufgabenstellung
+
+* Vorbereitungen
+** Koordinaten beantragen
+** Landkarte vorbereiten mittels erhaltenen Koordinaten
+
+* df
+
+
 ==== Funktionale Anforderungen
 
 [plantuml,wireframe,png]
