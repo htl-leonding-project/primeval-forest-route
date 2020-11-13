@@ -3,10 +3,13 @@
 Europäische Urwaldroute
 
 === Problemstellung / Projektauslöser / Vorprojekt
-In der Vergangenheit kam es öfters vor, dass durch motivierte Wanderer die Vegetation verschmutzt und zerstört wurde,
-indem sie unmakierte/unoffizielle Wege nahmen.
-Um die Tiere und Organismen in solchen Gebieten in Zukunft zu schützen wird eine Software entwickelt.
 
+In der Vergangenheit kam es öfters vor, dass durch motivierte
+Wanderer die Vegetation verschmutzt und zerstört wurde,
+indem sie unmarkierte/unoffizielle Wege nahmen.
+Um die Bäume und das Umfeld in solchen Gebieten in Zukunft
+zu schützen wird eine Software entwickelt, die als Profit
+für die Einwohner wegen des darauffolgenden Tourismus dient.
 === Aufgabenstellung (Projektergebnis / Leistung / Softwareprodukt)
 
 ==== Projekthauptaufgaben: Funktionalität "Was kann das Softwareprodukt"
