@@ -42,31 +42,60 @@ der zu bewandernden Pfade bei einer Person der Organisation angefragt.
 
 image:plantuml/use_case1.png[link="plantuml/use_case1.png"]
 
-==== Nichtfunktionale Anforderungen (NFA)
+//==== Nichtfunktionale Anforderungen (NFA)
+
 === Ziele
-=== Mengengerüst
-=== Rahmenbedingungen
-zB Vorgaben vom Auftraggeber
 
-== Entwurf "Wie mache ich es"
-=== Systemarchitektur
-=== ...
+Unterstützung des Umweltschutzes und betroffene Bewohner die davon profitieren.
 
-== Projekthandbuch "Organisatorische Rahmenbedingungen"
+//=== Mengengerüst
+//=== Rahmenbedingungen
+//zB Vorgaben vom Auftraggeber
+
+//== Entwurf "Wie mache ich es"
+//=== Systemarchitektur
+//=== ...
+
+//== Projekthandbuch "Organisatorische Rahmenbedingungen"
+=== Meilensteine
+
+[cols="1,1", options="header"]
+|===
+| Meilenstein
+| Datum
+
+| Brain Storming
+| 2.10.2020
+
+| Projekt-Auftrag
+| 29.10.2020
+
+| Pflichtenheft
+| --
+
+| Vorbereitungen arrangiert
+| --
+
+|===
 
 === GANTT-Diagramm
-
-mit User-Stories (definiert in YouTrack)
 
 [plantuml,gantt-protoype,png]
 ----
 @startuml
-[Test prototype] lasts 10 days
-[Prototype completed] happens at [Test prototype]'s end
-[Setup assembly line] lasts 12 days
-[Setup assembly line] starts at [Test prototype]'s end
-[Test prototype 2] lasts 3 days
-[Test prototype 2] starts at [Prototype completed]'s end
+[Brain Storming] lasts 14 days
+[Projekt-Auftrag] lasts 21 days
+[Design] lasts 50 days
+[Design] is colored in lightblue
+[Pflichtenheft] lasts 21 days
+[Preparations] lasts 15 days
+
+Project starts 2020-10-9
+[Brain Storming] starts 2020-10-9
+[Projekt-Auftrag] starts 2020-10-29
+[Design] starts 2020-10-16
+[Preparations] starts 2020-11-20
+[Pflichtenheft] starts 2020-11-13
 @enduml
 ----
 
