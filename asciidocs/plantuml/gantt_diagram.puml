@@ -1,0 +1,15 @@
+@startgantt
+[Brain Storming] lasts 14 days
+[Projekt-Auftrag] lasts 21 days
+[Design] lasts 50 days
+[Design] is colored in lightblue
+[Pflichtenheft] lasts 22 days
+[Preparations] lasts 15 days
+
+Project starts 2020-10-9
+[Brain Storming] starts 2020-10-9
+[Projekt-Auftrag] starts 2020-10-29
+[Design] starts 2020-10-16
+[Preparations] starts 2020-11-20
+[Pflichtenheft] starts 2020-11-13
+@endgantt

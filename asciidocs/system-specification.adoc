@@ -40,7 +40,7 @@ der zu bewandernden Pfade bei einer Person der Organisation angefragt.
 
 ==== Funktionale Anforderungen
 
-image:plantuml/use_case1.png[link="plantuml/use_case1.png"]
+image::images/use_case1.png[use-case diagram]
 
 //==== Nichtfunktionale Anforderungen (NFA)
 
@@ -80,24 +80,7 @@ Unterstützung des Umweltschutzes und betroffene Bewohner die davon profitieren.
 
 === GANTT-Diagramm
 
-[plantuml,gantt-protoype,png]
-----
-@startuml
-[Brain Storming] lasts 14 days
-[Projekt-Auftrag] lasts 21 days
-[Design] lasts 50 days
-[Design] is colored in lightblue
-[Pflichtenheft] lasts 21 days
-[Preparations] lasts 15 days
-
-Project starts 2020-10-9
-[Brain Storming] starts 2020-10-9
-[Projekt-Auftrag] starts 2020-10-29
-[Design] starts 2020-10-16
-[Preparations] starts 2020-11-20
-[Pflichtenheft] starts 2020-11-13
-@enduml
-----
+image::images/gantt_diagram.png[gantt diagram]
 
 //* link:minutes-of-meeting.html[Protokollvorlage]
 //* link:demo.html[Demo]
