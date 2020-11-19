@@ -32,22 +32,16 @@ der zu bewandernden Pfade bei einer Person der Organisation angefragt.
 ** Koordinaten beantragen
 ** Landkarte vorbereiten mittels erhaltenen Koordinaten
 
-* df
-
+* Dokumentation
+** README.md
+** asciidoctor
+** use-case diagram
+** Datenmodell (ERD)
 
 ==== Funktionale Anforderungen
 
-[plantuml,wireframe,png]
-----
-@startsalt
-{
-Name         | "                 "
-Modifiers:   | { (X) public | () default | () private | () protected
-	            [] abstract | [] final   | [] static }
-Superclass:  | { "java.lang.Object " | [Browse...] }
-}
-@endsalt
-----
+image:plantuml/use_case1.png[link="plantuml/use_case1.png"]
+
 ==== Nichtfunktionale Anforderungen (NFA)
 === Ziele
 === Mengengerüst
@@ -76,5 +70,5 @@ mit User-Stories (definiert in YouTrack)
 @enduml
 ----
 
-* link:minutes-of-meeting.html[Protokollvorlage]
-* link:demo.html[Demo]
+//* link:minutes-of-meeting.html[Protokollvorlage]
+//* link:demo.html[Demo]

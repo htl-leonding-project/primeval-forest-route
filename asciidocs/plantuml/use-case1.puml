@@ -1,0 +1,26 @@
+@startuml
+
+actor Benutzer1 as b1
+
+usecase "Fotos machen" as fotos
+
+package AppFrontend {
+    usecase "Route anzeigen" as USCF1
+    usecase "Bilder anzeigen" as USCF2
+}
+
+package AppBackend {
+    usecase "Koordinaten anfragen" as USCB1
+    usecase "Route erzeugen" as USCB2
+    usecase "erstellte Bilder zu Fotoalbum" as USCB3
+}
+
+b1 --> USCF1 : möchte Route sehen
+b1 --> USCF2 : möchte Fotoalbum sehen
+b1 --> fotos
+USCB3 --> USCF2
+fotos --> USCB3
+USCB1 --> USCB2
+USCB2 --> USCF1 : Visualisierung
+
+@enduml
