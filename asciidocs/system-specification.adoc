@@ -48,8 +48,19 @@ image::images/use_case1.png[use-case diagram]
 
 Unterstützung des Umweltschutzes und betroffene Bewohner die davon profitieren.
 
-//=== Mengengerüst
-//=== Rahmenbedingungen
+=== Mengengerüst
+
+Es wird eine Wanderschaft veranstaltet, dabei nimmt eine Gruppe von 12 Personen teil.
+Wenn jeder Teilnehmer diese App nutzt, werden schlussendlich 12 verschiedene Fotoalben erstellt.
+
+NOTE: Die Nutzung der App kann stark variieren, da möglicherweise nicht alle Personen die Applikation verwenden
+die die Route durchqueren.
+
+=== Rahmenbedingungen
+
+* Quarkus Backend
+* Angular Frontend
+
 //zB Vorgaben vom Auftraggeber
 
 //== Entwurf "Wie mache ich es"
