@@ -1,0 +1,9 @@
+= XML
+
+== Allgemeine Informationen
+
+Man kann seine Daten mit XML (mit Castor, XStream, JAXB) ausgeben, diese dann mit einem XSLT stylesheet in XSL-FO transformieren und das ergebnis danach mit Apache FOP in PDF rendern.
+
+== Warum?
+
+Nach einer Weile Recherchieren, habe ich mitbekommen, dass einige Leute Probleme mit ApachePDF Box oder iText haben und deswegen diese Methode verwenden, da man mit dieser Methode die PDF Dateien flexibler und stilvoller erstellen kann.
