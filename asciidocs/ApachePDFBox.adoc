@@ -6,11 +6,11 @@ ApachePDF Box ist eine open source Java Library. Mit dieser Library kann man PDF
 
 == Features
 
-=== Text extrahieren
+=== Extract Text
 
 Extrahieren von Unicode-Text aus PDF-Dateien.
 
-=== Extract Text
+=== Split & Merge
 
 Teilen eines einzelnen PDF-Dokuments in mehrere Dateien auf oder führen Sie mehrere PDF-Dateien zusammen.
 
