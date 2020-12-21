@@ -1,0 +1,40 @@
+@startuml
+
+class Route {
+    + String name
+    + int startPointLengthCoordinates
+    + int startPointWidthCoordinates
+    + int endPointLengthCoordinates
+    + int endPointWidthCoordinates
+}
+
+class Waypoint {
+    + int lengthCoordinates
+    + int widthCoordinates
+}
+
+class ControlPoint {
+    + int lengthCoordinates
+    + int widthCoordinates
+    + String comment
+    + Path imagepath
+}
+
+class UserRoute {
+    + User user
+    + int lengthCoordinates
+    + int widthCoordinates
+}
+
+class User {
+    + String firstname
+    + String lastname
+}
+
+UserRoute -- User
+Waypoint - Route
+ControlPoint -- Waypoint
+UserRoute -- Route
+ControlPoint - Route
+
+@enduml

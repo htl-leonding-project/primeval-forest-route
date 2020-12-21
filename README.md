@@ -3,4 +3,5 @@
 [project proposal](./asciidocs/project-proposal.adoc)<br>
 [system specification](./asciidocs/system-specification.adoc) <br>
 
-[geotagging_analysis](./asciidocs/geotagging_analysis.adoc)
+[geotagging analysis](./asciidocs/geotagging_analysis.adoc) <br>
+[class diagram](./diagram/classdiagram.puml)
