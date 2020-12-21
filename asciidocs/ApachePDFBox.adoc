@@ -1,0 +1,39 @@
+= ApachePDF Box
+
+== Allgemeine Informationen
+
+ApachePDF Box ist eine open source Java Library. Mit dieser Library kann man PDF Dokumente erstellen oder manipulieren von bereits bestehenden Dokumenten.
+
+== Features
+
+=== Text extrahieren
+
+Extrahieren von Unicode-Text aus PDF-Dateien.
+
+=== Extract Text
+
+Teilen eines einzelnen PDF-Dokuments in mehrere Dateien auf oder führen Sie mehrere PDF-Dateien zusammen.
+
+=== Fill Forms
+
+Extrahiert Daten aus PDF-Formularen oder füllt Sie ein PDF-Formular aus.
+
+=== Preflight
+
+Validiert PDF-Dateien anhand des PDF / A-1b-Standards.
+
+=== Print
+
+Drucken eines PDF-Dokuments mit der Standard-Java-Druck-API.
+
+=== Save as Image
+
+Speichern von PDFs als Bilddateien wie PNG oder JPEG.
+
+=== Create PDFs
+
+Erstellen eines PDF-Dokuments von Grund auf mit eingebetteten Schriftarten und Bildern.
+
+=== Signing
+
+PDF-Dateien digital signieren.
