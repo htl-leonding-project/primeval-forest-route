@@ -1,6 +1,6 @@
-= Abspeicherung von Routen
+= Abspeichern von Routen
 
-== Wie werden Daten von Apenstreetmap und GoogleMaps abgespeichert?
+== Wie werden Daten von Openstreetmap und GoogleMaps abgespeichert?
 
 === Openstreetmap:
 
