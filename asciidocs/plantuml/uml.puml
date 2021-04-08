@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+class Kontrollstelle {
+
+}
+
+class Route {
+
+}
+
+class Wanderung {
+}
+
+class Wanderer {
+
+}
+
+class Bild {
+
+}
+
+Bild "*" --> "1" Kontrollstelle
+
+Kontrollstelle "*" --> "1" Route
+
+Route "*" - "*" Wanderer
+(Route, Wanderer) .. Wanderung
+
+
+Wanderung "1" <-- "*" Bild
+@enduml

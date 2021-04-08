@@ -42,6 +42,10 @@ der zu bewandernden Pfade bei einer Person der Organisation angefragt.
 
 image::images/use_case1.png[use-case diagram]
 
+==== UML-Diagramm
+
+image::images/uml.png[uml diagram]
+
 //==== Nichtfunktionale Anforderungen (NFA)
 
 === Ziele
