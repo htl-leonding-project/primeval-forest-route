@@ -1,22 +1,41 @@
 @startuml
 left to right direction
 class Kontrollstelle {
-
+    * Long: id
+    + String: name
+    + Double: latitudeCoordinate
+    + Double: longitudeCoordinate
+    - List<Picture>: pictures
+    ~ Route: route
 }
 
 class Route {
-
+    * Long: id
+    + String: name
+    + Double: length
+    - List<ControlPoint>: controlPoints
+    ~ Hike: hike
 }
 
 class Wanderung {
+    * Long: id
+    + Date: dateOfJourney
+    - List<Hiker>: groupOfHikers
+    - List<Route>: route
 }
 
 class Wanderer {
-
+    * Long: id
+    + String: firstName
+    + String: lastName
+    ~ Hike: hike
 }
 
 class Bild {
-
+    * Long: id
+    + String: fileName
+    + byte[]: imageData
+    ~ ControlPoint: controlPoint
 }
 
 Bild "*" --> "1" Kontrollstelle
