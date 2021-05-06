@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "ControlPoint.findAll",
+                query = "select c from ControlPoint c order by c.name"
+        )
+})
 public class ControlPoint {
 
     @Id
