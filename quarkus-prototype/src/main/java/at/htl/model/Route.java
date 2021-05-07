@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "Route.findAll",
+                query = "select r from Route r order by r.name"
+        )
+})
 public class Route {
 
     @Id

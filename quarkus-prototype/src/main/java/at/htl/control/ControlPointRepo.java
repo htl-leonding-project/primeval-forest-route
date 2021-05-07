@@ -56,7 +56,6 @@ public class ControlPointRepo {
 
     @Transactional
     public void delete(Long id) {
-        ControlPoint productToDelete = em.find(ControlPoint.class, id);
-        em.remove(productToDelete);
+        em.remove(findById(id));
     }
 }
