@@ -19,9 +19,6 @@ public class ControlPoint {
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlpoint")
-    private List<Picture> pictures;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Route route;
 
@@ -57,22 +54,12 @@ public class ControlPoint {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
-    public List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }
-
     @Override
     public String toString() {
         return "ControlPoint{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", latitudeCoordinate=" + latitudeCoordinate +
-                ", longitudeCoordinate=" + longitudeCoordinate +
-                ", pictures=" + pictures +
-                '}';
+                ", longitudeCoordinate=" + longitudeCoordinate +'}';
     }
 }

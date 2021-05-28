@@ -15,17 +15,23 @@ public class Hike {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hike")
     private List<Hiker> groupOfHikers;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hike")
-    private List<Route> route;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Route route;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Hiker hiker;
 
     public Hike() {
     }
 
-    public Hike(Long id, Date dateOfJourney, List<Hiker> groupOfHikers, List<Route> route) {
+    public Hike(Long id, Date dateOfJourney, List<Hiker> groupOfHikers, Route route, Hiker hiker) {
         this.id = id;
         this.dateOfJourney = dateOfJourney;
         this.groupOfHikers = groupOfHikers;
         this.route = route;
+        this.hiker = hiker;
     }
 
     public Long getId() {
@@ -52,12 +58,20 @@ public class Hike {
         this.groupOfHikers = groupOfHikers;
     }
 
-    public List<Route> getRoute() {
+    public Route getRoute() {
         return route;
     }
 
-    public void setRoute(List<Route> route) {
+    public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public Hiker getHiker() {
+        return hiker;
+    }
+
+    public void setHiker(Hiker hiker) {
+        this.hiker = hiker;
     }
 
     @Override
