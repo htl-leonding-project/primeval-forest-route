@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "T_HIKE")
 public class Hike {
 
     @Id
@@ -12,15 +13,16 @@ public class Hike {
     private Long id;
     private Date dateOfJourney;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hike")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "V_GROUP_OF_HIKERS")
     private List<Hiker> groupOfHikers;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @JoinColumn(name = "V_ROUTE")
     private Route route;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn
+    @JoinColumn(name = "V_HIKER")
     private Hiker hiker;
 
     public Hike() {

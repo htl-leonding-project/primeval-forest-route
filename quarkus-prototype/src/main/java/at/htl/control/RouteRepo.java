@@ -1,6 +1,7 @@
 package at.htl.control;
 
 import at.htl.model.Route;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -8,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 @ApplicationScoped
-public class RouteRepo {
+public class RouteRepo implements PanacheRepository<Route> {
 
     private static final String FILE_NAME = "";
 
@@ -20,9 +21,9 @@ public class RouteRepo {
         return em.merge(route);
     }
 
-    public List<Route> findAll() {
+    /*public List<Route> findAll() {
         return em.createQuery("Route.findAll", Route.class).getResultList();
-    }
+    }*/
 
     public Route findById(Long id) {
         return em.find(Route.class, id);
