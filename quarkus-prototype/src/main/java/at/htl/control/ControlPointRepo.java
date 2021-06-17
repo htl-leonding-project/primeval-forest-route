@@ -20,7 +20,7 @@ import static java.lang.System.out;
 @ApplicationScoped
 public class ControlPointRepo {
 
-    private static final String FILE_NAME = "";
+    private static final String FILE_NAME = "controlpoints.csv";
 
     @Inject
     EntityManager em;

@@ -6,14 +6,17 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @ApplicationScoped
 public class RouteRepo {
 
-    private static final String FILE_NAME = "";
+    private static final String FILE_NAME = "routes.csv";
 
     @Inject
     EntityManager em;
+
+
 
     @Transactional
     public Route save(Route route) {
@@ -21,7 +24,7 @@ public class RouteRepo {
     }
 
     public List<Route> findAll() {
-        return em.createQuery("Route.findAll", Route.class).getResultList();
+        return em.createNamedQuery("Route.findAll", Route.class).getResultList();
     }
 
     public Route findById(Long id) {
@@ -31,20 +34,4 @@ public class RouteRepo {
     public void delete(Long id) {
         em.remove(findById(id));
     }
-
-        /*@Transactional
-    public void readFromCsv() {
-        URL url = Thread.currentThread().getContextClassLoader().getResource(FILE_NAME);
-        try {
-            assert url != null;
-            try (Stream<String> stream = Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8)) {
-                stream.skip(1)
-                        .map(Route::new)
-                        .peek(out::println)
-                        .forEach(em::merge);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }
