@@ -1,6 +1,6 @@
 @startuml
 left to right direction
-class Kontrollstelle {
+class ControlPoint {
     * Long: id
     + String: name
     + Double: latitudeCoordinate
@@ -14,7 +14,7 @@ class Route {
     + Double: length
 }
 
-class Wanderung {
+class Hike {
     * Long: id
     + Date: dateOfJourney
     - List<Hiker>: groupOfHikers
@@ -22,13 +22,13 @@ class Wanderung {
     - Hiker: hiker
 }
 
-class Wanderer {
+class Hiker {
     * Long: id
     + String: firstName
     + String: lastName
 }
 
-class Bild {
+class Image {
     * Long: id
     + String: fileName
     + byte[]: imageData
@@ -36,13 +36,13 @@ class Bild {
     ~ Hike: hike
 }
 
-Bild "*" --> "1" Kontrollstelle
+Image "*" --> "1" ControlPoint
 
-Kontrollstelle "*" --> "1" Route
+ControlPoint "*" --> "1" Route
 
-Route "*" - "*" Wanderer
-(Route, Wanderer) .. Wanderung
+Route "*" - "*" Hiker
+(Route, Hiker) .. Hike
 
 
-Wanderung "1" <-- "*" Bild
+Hike "1" <-- "*" Image
 @enduml
