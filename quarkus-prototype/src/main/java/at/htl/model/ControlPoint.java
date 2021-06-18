@@ -1,18 +1,20 @@
 package at.htl.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(
-                name = "ControlPoint.findAll",
-                query = "select c from ControlPoint c order by c.name"
-        )
-})
+@SequenceGenerator(
+        name = "contrPointSeq",
+        initialValue = 10,
+        sequenceName = "CONTRPOINT_SEQ"
+)
 public class ControlPoint {
 
     @Id
+    @GeneratedValue(generator = "contrPointSeq")
     private Long id;
 
     private String name;
@@ -21,6 +23,16 @@ public class ControlPoint {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Route route;
+
+    public ControlPoint() {
+    }
+
+    public ControlPoint(String name, Double latitudeCoordinate, Double longitudeCoordinate, Route route) {
+        this.name = name;
+        this.latitudeCoordinate = latitudeCoordinate;
+        this.longitudeCoordinate = longitudeCoordinate;
+        this.route = route;
+    }
 
     public Long getId() {
         return id;

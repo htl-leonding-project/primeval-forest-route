@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.naming.ldap.Control;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,10 +26,11 @@ import static java.lang.System.out;
 @ApplicationScoped
 public class ControlPointRepo implements PanacheRepository<ControlPoint> {
 
-    private static final String FILE_NAME = "";
-
     @Inject
     EntityManager em;
+
+    @Inject
+    RouteRepo routeRepo;
 
     @Transactional
     void readControlPointsFromCSV(String fileName) {
@@ -36,29 +39,22 @@ public class ControlPointRepo implements PanacheRepository<ControlPoint> {
         br.lines()
                 .skip(1)
                 .map(this::parseCsvLine)
-                .forEach(out::println);
+                .forEach(this::persist);
     }
 
     // TODO: parse the line mapped fom the reading
-    private String[] parseCsvLine(String line) {
-        return null;
-    }
+    private List<ControlPoint> parseCsvLine(String line) {
 
-    /*public ControlPoint findById(Long id) {
-        return em.find(ControlPoint.class, id);
-    }
+        List<ControlPoint> controlPoints = new LinkedList<>();
 
-    public List<ControlPoint> findAll() {
-        return em.createNamedQuery("ControlPoint.findAll", ControlPoint.class).getResultList();
-    }
+        String[] elements = line.split(";");
 
-    @Transactional
-    public ControlPoint save(ControlPoint controlPoint) {
-        return em.merge(controlPoint);
+        ControlPoint controlPoint = new ControlPoint(
+                elements[1],
+                Double.parseDouble(elements[2]),
+                Double.parseDouble(elements[3]),
+                routeRepo.getRouteWithContrP(Long.parseLong(elements[4]))
+        );
+        return controlPoints;
     }
-
-    @Transactional
-    public void delete(Long id) {
-        em.remove(findById(id));
-    }*/
 }
