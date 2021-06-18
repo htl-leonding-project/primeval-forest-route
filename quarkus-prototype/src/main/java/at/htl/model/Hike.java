@@ -13,10 +13,6 @@ public class Hike {
     private Long id;
     private Date dateOfJourney;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "V_GROUP_OF_HIKERS")
-    private List<Hiker> groupOfHikers;
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "V_ROUTE")
     private Route route;
@@ -28,10 +24,9 @@ public class Hike {
     public Hike() {
     }
 
-    public Hike(Long id, Date dateOfJourney, List<Hiker> groupOfHikers, Route route, Hiker hiker) {
+    public Hike(Long id, Date dateOfJourney, Route route, Hiker hiker) {
         this.id = id;
         this.dateOfJourney = dateOfJourney;
-        this.groupOfHikers = groupOfHikers;
         this.route = route;
         this.hiker = hiker;
     }
@@ -50,14 +45,6 @@ public class Hike {
 
     public void setDateOfJourney(Date dateOfJourney) {
         this.dateOfJourney = dateOfJourney;
-    }
-
-    public List<Hiker> getGroupOfHikers() {
-        return groupOfHikers;
-    }
-
-    public void setGroupOfHikers(List<Hiker> groupOfHikers) {
-        this.groupOfHikers = groupOfHikers;
     }
 
     public Route getRoute() {
@@ -81,7 +68,6 @@ public class Hike {
         return "Hike{" +
                 "id=" + id +
                 ", dateOfJourney=" + dateOfJourney +
-                ", groupOfHikers=" + groupOfHikers +
                 ", route=" + route +
                 '}';
     }

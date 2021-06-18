@@ -53,7 +53,7 @@ public class ControlPointRepo implements PanacheRepository<ControlPoint> {
                 elements[1],
                 Double.parseDouble(elements[2]),
                 Double.parseDouble(elements[3]),
-                routeRepo.getRouteWithContrP(Long.parseLong(elements[4]))
+                routeRepo.getRouteWithId(Long.parseLong(elements[4]))
         );
         return controlPoints;
     }

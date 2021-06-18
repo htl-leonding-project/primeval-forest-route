@@ -49,7 +49,7 @@ public class RouteRepo implements PanacheRepository<Route> {
                 elements[1],
                 Double.parseDouble(elements[2]),
                 Double.parseDouble(elements[3]),
-                routeRepo.getRouteWithContrP(Long.parseLong(elements[4]))
+                routeRepo.getRouteWithId(Long.parseLong(elements[4]))
         );
         return controlPoints;
     }
@@ -66,7 +66,7 @@ public class RouteRepo implements PanacheRepository<Route> {
         em.remove(findById(id));
     }
 
-    public Route getRouteWithContrP(Long id) {
+    public Route getRouteWithId(Long id) {
         Query query = em.createQuery(
                 "select r from Route r where r.id = :id", Route.class
         ).setParameter("id", id);
