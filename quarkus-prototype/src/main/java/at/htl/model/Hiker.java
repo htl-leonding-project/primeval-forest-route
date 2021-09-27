@@ -6,23 +6,19 @@ import javax.persistence.*;
 public class Hiker {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Hike hike;
-
     public Hiker() {
     }
 
-    public Hiker(Long id, String firstName, String lastName, Hike hike) {
+    public Hiker(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.hike = hike;
     }
 
     public Long getId() {
@@ -47,14 +43,6 @@ public class Hiker {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public Hike getHike() {
-        return hike;
-    }
-
-    public void setHike(Hike hike) {
-        this.hike = hike;
     }
 
     @Override

@@ -1,32 +1,26 @@
 package at.htl.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Route {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Double length;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "route")
-    private List<ControlPoint> controlPoints;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Hike hike;
 
     public Route() {
     }
 
-    public Route(Long id, String name, Double length, List<ControlPoint> controlPoints, Hike hike) {
-        this.id = id;
+    public Route(String name, Double length) {
         this.name = name;
         this.length = length;
-        this.controlPoints = controlPoints;
-        this.hike = hike;
     }
 
     public Long getId() {
@@ -53,29 +47,11 @@ public class Route {
         this.length = length;
     }
 
-    public List<ControlPoint> getControlPoints() {
-        return controlPoints;
-    }
-
-    public void setControlPoints(List<ControlPoint> controlPoints) {
-        this.controlPoints = controlPoints;
-    }
-
-    public Hike getHike() {
-        return hike;
-    }
-
-    public void setHike(Hike hike) {
-        this.hike = hike;
-    }
-
     @Override
     public String toString() {
         return "Route{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", length=" + length +
-                ", controlPoints=" + controlPoints +
-                '}';
+                ", length=" + length + '}';
     }
 }

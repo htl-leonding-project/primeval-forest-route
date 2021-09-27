@@ -1,23 +1,30 @@
 package at.htl.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class ControlPoint {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "controlpoint")
-    private List<Picture> pictures;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Route route;
+
+    public ControlPoint() {
+    }
+
+    public ControlPoint(String name, Double latitudeCoordinate, Double longitudeCoordinate, Route route) {
+        this.name = name;
+        this.latitudeCoordinate = latitudeCoordinate;
+        this.longitudeCoordinate = longitudeCoordinate;
+        this.route = route;
+    }
 
     public Long getId() {
         return id;
@@ -51,22 +58,12 @@ public class ControlPoint {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
-    public List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }
-
     @Override
     public String toString() {
         return "ControlPoint{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", latitudeCoordinate=" + latitudeCoordinate +
-                ", longitudeCoordinate=" + longitudeCoordinate +
-                ", pictures=" + pictures +
-                '}';
+                ", longitudeCoordinate=" + longitudeCoordinate +'}';
     }
 }

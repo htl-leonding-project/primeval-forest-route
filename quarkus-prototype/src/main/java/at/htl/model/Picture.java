@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Picture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fileName;
@@ -16,14 +16,18 @@ public class Picture {
     @Basic(fetch = FetchType.LAZY)
     private byte[] imageData;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     private ControlPoint controlPoint;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
+    private Hike hike;
 
     public Picture() {
     }
 
-    public Picture(Long id, String fileName, byte[] imageData, ControlPoint controlPoint) {
-        this.id = id;
+    public Picture(String fileName, byte[] imageData, ControlPoint controlPoint) {
         this.fileName = fileName;
         this.imageData = imageData;
         this.controlPoint = controlPoint;

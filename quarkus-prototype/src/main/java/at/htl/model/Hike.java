@@ -1,31 +1,35 @@
 package at.htl.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Hike {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateOfJourney;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hike")
-    private List<Hiker> groupOfHikers;
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    private Route route;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hike")
-    private List<Route> route;
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    private Hiker hiker;
 
     public Hike() {
     }
 
-    public Hike(Long id, Date dateOfJourney, List<Hiker> groupOfHikers, List<Route> route) {
+    public Hike(Long id, Date dateOfJourney, Route route, Hiker hiker) {
         this.id = id;
         this.dateOfJourney = dateOfJourney;
-        this.groupOfHikers = groupOfHikers;
         this.route = route;
+        this.hiker = hiker;
     }
 
     public Long getId() {
@@ -44,20 +48,20 @@ public class Hike {
         this.dateOfJourney = dateOfJourney;
     }
 
-    public List<Hiker> getGroupOfHikers() {
-        return groupOfHikers;
-    }
-
-    public void setGroupOfHikers(List<Hiker> groupOfHikers) {
-        this.groupOfHikers = groupOfHikers;
-    }
-
-    public List<Route> getRoute() {
+    public Route getRoute() {
         return route;
     }
 
-    public void setRoute(List<Route> route) {
+    public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public Hiker getHiker() {
+        return hiker;
+    }
+
+    public void setHiker(Hiker hiker) {
+        this.hiker = hiker;
     }
 
     @Override
@@ -65,8 +69,6 @@ public class Hike {
         return "Hike{" +
                 "id=" + id +
                 ", dateOfJourney=" + dateOfJourney +
-                ", groupOfHikers=" + groupOfHikers +
-                ", route=" + route +
                 '}';
     }
 }
