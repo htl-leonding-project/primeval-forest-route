@@ -3,12 +3,12 @@ package at.htl.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-public class Route {
+public class Route extends PanacheEntityBase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -17,8 +17,7 @@ public class Route {
     public Route() {
     }
 
-    public Route(Long id, String name, Double length) {
-        this.id = id;
+    public Route(String name, Double length) {
         this.name = name;
         this.length = length;
     }

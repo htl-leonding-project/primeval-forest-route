@@ -1,27 +1,25 @@
 package at.htl.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@SequenceGenerator(
-        name = "contrPointSeq",
-        initialValue = 10,
-        sequenceName = "CONTRPOINT_SEQ"
-)
-public class ControlPoint {
+public class ControlPoint extends PanacheEntityBase {
 
     @Id
-    @GeneratedValue(generator = "contrPointSeq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
     private Route route;
 
     public ControlPoint() {

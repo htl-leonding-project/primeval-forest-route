@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "T_HIKE")
 public class Hike {
 
     @Id
@@ -14,11 +13,9 @@ public class Hike {
     private Date dateOfJourney;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "V_ROUTE")
     private Route route;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "V_HIKER")
     private Hiker hiker;
 
     public Hike() {
