@@ -5,6 +5,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.assertj.db.type.Source;
 import org.assertj.db.type.Table;
 import org.junit.jupiter.api.Test;
+import static org.assertj.db.output.Outputs.output;
 
 import javax.transaction.Transactional;
 
@@ -21,17 +22,20 @@ class RouteRepositoryTest {
     void t01_saveRouteToDB() {
         RouteRepository routeRepository = new RouteRepository();
         Table table = new Table(source, "route");
-        Route r1 = new Route("r1", 123.3);
+        Route r1 = new Route("route1", 145.3);
 
         assertThat(table).hasNumberOfRows(0);
 
         routeRepository.save(r1);
 
-        assertThat(table).hasNumberOfRows(1);
+        table = new Table(source, "route");
+        output(table).toConsole();
+
         assertThat(table)
-                .row(1)
+                .hasNumberOfRows(1)
+                .row(0)
                 .column("name")
                 .value()
-                .isEqualTo("r1");
+                .isEqualTo("route1");
     }
 }
