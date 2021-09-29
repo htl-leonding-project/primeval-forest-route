@@ -29,7 +29,7 @@ public class RouteRepository implements PanacheRepository<Route> {
         route.delete();
     }
 
-    public Route findById(Long id) {
+    public Route findRouteWithId(Long id) {
         return findById(id);
     }
 
