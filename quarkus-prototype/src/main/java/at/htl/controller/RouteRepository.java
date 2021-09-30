@@ -19,6 +19,10 @@ public class RouteRepository implements PanacheRepository<Route> {
 
     public static String routeFile = "/routes.csv";
 
+    public Route findByCsvId(Long csvId){
+        return find("csvid", csvId).firstResult();
+    }
+
     @Transactional
     public void persistRoute() {
         List<Route> routes = generateRoutes();

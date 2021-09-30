@@ -2,11 +2,15 @@ package at.htl.controller;
 
 
 import at.htl.model.ControlPoint;
+import at.htl.model.Route;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -19,7 +23,7 @@ import java.util.stream.Stream;
 @ApplicationScoped
 public class ControlPointRepository implements PanacheRepository<ControlPoint> {
 
-    public static String controlPointsFile = "controlpoints.csv";
+    public static String controlPointsFile = "/controlpoints.csv";
 
     @Transactional
     public void saveControlPoint(ControlPoint controlPoint) {
@@ -28,30 +32,44 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
         }
     }
 
-    public void persistCsvIntoDb() {
-        List<String[]> controlPoints = readDataFromFile(controlPointsFile);
+    @Transactional
+    public void persistControlPoints() {
+        List<ControlPoint> controlPoints = generateControlPoints();
+        System.out.println(controlPoints);
+        for (ControlPoint controlPoint : controlPoints) {
+            persist(controlPoint);
+        }
+    }
 
-        System.out.println(controlPoints.size());
+    public List<ControlPoint> generateControlPoints() {
+        List<String[]> fileData = readDataFromFile(controlPointsFile);
+        List<ControlPoint> controlPoints = new ArrayList<>();
+        RouteRepository rp = new RouteRepository();
+
+        for (String[] controlPointString : fileData) {
+            ControlPoint controlPoint = new ControlPoint();
+
+            controlPoint.setName(controlPointString[1]);
+            controlPoint.setLatitudeCoordinate(Double.parseDouble(controlPointString[2]));
+            controlPoint.setLongitudeCoordinate(Double.parseDouble(controlPointString[3]));
+            controlPoint.setRoute(rp.findByCsvId(Long.parseLong(controlPointString[4])));
+
+            controlPoints.add(controlPoint);
+        }
+
+        return controlPoints;
     }
 
     public List<String[]> readDataFromFile(String fileName) {
-        List<String[]> fileData = new ArrayList<>();
 
-        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
-        assert url != null;
-        try (Stream<String> stream = Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8)) {
-            fileData = stream
-                    .skip(1)
-                    .distinct()
-                    .map(s -> s.split(";"))
-                    .collect(Collectors.toList());
+        InputStream is = getClass().getResourceAsStream(fileName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return fileData;
-
+        return br
+                .lines()
+                .skip(1)
+                .map(s -> s.split(";"))
+                .collect(Collectors.toUnmodifiableList());
     }
+
 }

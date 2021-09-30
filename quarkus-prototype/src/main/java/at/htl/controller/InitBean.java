@@ -17,6 +17,6 @@ public class InitBean {
 
     void onStart(@Observes StartupEvent event) {
         routeRepository.persistRoute();
-        //controlPointRepository.persistCsvIntoDb();
+        controlPointRepository.persistControlPoints();
     }
 }

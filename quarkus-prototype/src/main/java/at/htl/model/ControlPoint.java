@@ -58,6 +58,14 @@ public class ControlPoint {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
     @Override
     public String toString() {
         return "ControlPoint{" +
