@@ -1,11 +1,8 @@
 package at.htl.controller;
 
-
-import at.htl.model.ControlPoint;
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import at.htl.model.Route;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -17,21 +14,31 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ApplicationScoped
-public class ControlPointRepository implements PanacheRepository<ControlPoint> {
+public class RouteRepository {
 
-    public static String controlPointsFile = "controlpoints.csv";
+    public static String routeFile = "routes.csv";
 
-    @Transactional
-    public void saveControlPoint(ControlPoint controlPoint) {
-        if (controlPoint != null) {
-            persist(controlPoint);
-        }
+    public void persistRoute() {
+        List<Route> routes = generateRoutes();
+
+        System.out.println(routes.get(0));
     }
 
-    public void persistCsvIntoDb() {
-        List<String[]> controlPoints = readDataFromFile(controlPointsFile);
+    public List<Route> generateRoutes() {
+        List<String[]> fileData = readDataFromFile(routeFile);
+        List<Route> routes = new ArrayList<>();
+        Route route = new Route();
 
-        System.out.println(controlPoints.size());
+        for (int i = 0; i < fileData.size(); i++) {
+            String[] routeString = fileData.get(i);
+            route.setCsvId(Long.parseLong(routeString[0]));
+            route.setName(routeString[1]);
+            route.setLength(Double.parseDouble(routeString[2]));
+
+            routes.add(route);
+        }
+
+        return routes;
     }
 
     public List<String[]> readDataFromFile(String fileName) {

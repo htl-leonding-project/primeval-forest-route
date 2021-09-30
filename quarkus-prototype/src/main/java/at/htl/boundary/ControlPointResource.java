@@ -19,9 +19,9 @@ public class ControlPointResource {
     private LinkedList<ControlPoint> controlPoints = new LinkedList<>();
 
     public ControlPointResource() {
-        this.controlPoints.add(
-                new ControlPoint("c1", 12.2, 14.5,
-                        new Route("r1", 123.0)));
+//        this.controlPoints.add(
+//                new ControlPoint("c1", 12.2, 14.5,
+//                        new Route("r1", 123.0)));
     }
 
     @GET

@@ -8,19 +8,29 @@ public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long csvId;
 
     private String name;
     private Double length;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Hike hike;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private Hike hike;
 
     public Route() {
     }
 
-    public Route(String name, Double length) {
+    public Route(Long csvId, String name, Double length) {
+        this.csvId = csvId;
         this.name = name;
         this.length = length;
+    }
+
+    public Long getCsvId() {
+        return csvId;
+    }
+
+    public void setCsvId(Long csvId) {
+        this.csvId = csvId;
     }
 
     public Long getId() {
