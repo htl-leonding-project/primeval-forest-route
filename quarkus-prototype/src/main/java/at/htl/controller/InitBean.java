@@ -15,7 +15,7 @@ public class InitBean {
     @Inject
     RouteRepository routeRepository;
 
-    void init(@Observes StartupEvent event) {
+    void onStart(@Observes StartupEvent event) {
         routeRepository.persistRoute();
         //controlPointRepository.persistCsvIntoDb();
     }

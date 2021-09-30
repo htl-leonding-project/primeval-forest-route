@@ -1,9 +1,11 @@
 package at.htl.controller;
 
 import at.htl.model.Route;
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.io.IOException;
+import javax.transaction.Transactional;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,26 +13,27 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ApplicationScoped
-public class RouteRepository {
+public class RouteRepository implements PanacheRepository<Route> {
 
-    public static String routeFile = "routes.csv";
+    public static String routeFile = "/routes.csv";
 
+    @Transactional
     public void persistRoute() {
         List<Route> routes = generateRoutes();
-
-        System.out.println(routes.get(0));
+        System.out.println(routes);
+        for (Route r : routes) {
+            persist(r);
+        }
     }
 
     public List<Route> generateRoutes() {
         List<String[]> fileData = readDataFromFile(routeFile);
         List<Route> routes = new ArrayList<>();
-        Route route = new Route();
 
-        for (int i = 0; i < fileData.size(); i++) {
-            String[] routeString = fileData.get(i);
+        for (String[] routeString : fileData) {
+            Route route = new Route();
             route.setCsvId(Long.parseLong(routeString[0]));
             route.setName(routeString[1]);
             route.setLength(Double.parseDouble(routeString[2]));
@@ -42,23 +45,33 @@ public class RouteRepository {
     }
 
     public List<String[]> readDataFromFile(String fileName) {
-        List<String[]> fileData = new ArrayList<>();
+
+        InputStream is = getClass().getResourceAsStream(fileName);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        return br
+                .lines()
+                .skip(1)
+                .map(s -> s.split(";"))
+                .collect(Collectors.toUnmodifiableList());
+
+        /*List<String[]> fileData = new ArrayList<>();
 
         URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
         assert url != null;
-        try (Stream<String> stream = Files.lines(Paths.get(url.getPath()), StandardCharsets.UTF_8)) {
-            fileData = stream
+        try {
+            List<String> listOfLines = Files.readAllLines(Paths.get(url.getPath()), StandardCharsets.UTF_8);
+            fileData = listOfLines
+                    .stream()
                     .skip(1)
                     .distinct()
                     .map(s -> s.split(";"))
                     .collect(Collectors.toList());
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return fileData;
+        return fileData;*/
 
     }
 }
