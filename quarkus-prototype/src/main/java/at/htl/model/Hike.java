@@ -1,21 +1,32 @@
 package at.htl.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Hike {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private Date dateOfJourney;
 
+<<<<<<< HEAD
     @ManyToOne(cascade = CascadeType.ALL)
     private Route route;
 
     @ManyToOne(cascade = CascadeType.ALL)
+=======
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+    private Route route;
+
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
+>>>>>>> main
     private Hiker hiker;
 
     public Hike() {
@@ -65,7 +76,10 @@ public class Hike {
         return "Hike{" +
                 "id=" + id +
                 ", dateOfJourney=" + dateOfJourney +
+<<<<<<< HEAD
                 ", route=" + route +
+=======
+>>>>>>> main
                 '}';
     }
 }

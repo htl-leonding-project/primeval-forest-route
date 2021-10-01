@@ -10,16 +10,38 @@ public class Route extends PanacheEntityBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long csvId;
 
     private String name;
     private Double length;
 
+<<<<<<< HEAD
     public Route() {
     }
 
     public Route(String name, Double length) {
         this.name = name;
         this.length = length;
+=======
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    private Hike hike;
+
+    public Route() {
+    }
+
+    public Route(Long csvId, String name, Double length) {
+        this.csvId = csvId;
+        this.name = name;
+        this.length = length;
+    }
+
+    public Long getCsvId() {
+        return csvId;
+    }
+
+    public void setCsvId(Long csvId) {
+        this.csvId = csvId;
+>>>>>>> main
     }
 
     public Long getId() {

@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Picture {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String fileName;
@@ -27,8 +27,7 @@ public class Picture {
     public Picture() {
     }
 
-    public Picture(Long id, String fileName, byte[] imageData, ControlPoint controlPoint) {
-        this.id = id;
+    public Picture(String fileName, byte[] imageData, ControlPoint controlPoint) {
         this.fileName = fileName;
         this.imageData = imageData;
         this.controlPoint = controlPoint;

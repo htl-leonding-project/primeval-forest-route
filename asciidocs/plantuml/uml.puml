@@ -18,8 +18,13 @@ class Hike {
     * Long: id
     + Date: dateOfJourney
     - List<Hiker>: groupOfHikers
+<<<<<<< HEAD
     - Route: route
     - Hiker: hiker
+=======
+    ~ Route: route
+    ~ Hiker: hiker
+>>>>>>> main
 }
 
 class Hiker {
