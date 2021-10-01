@@ -14,12 +14,19 @@ public class Hike {
     private Long id;
     private Date dateOfJourney;
 
+<<<<<<< HEAD
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Route route;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+=======
     @ManyToOne
     @Cascade(CascadeType.ALL)
     private Route route;
 
     @ManyToOne
     @Cascade(CascadeType.ALL)
+>>>>>>> main
     private Hiker hiker;
 
     public Hike() {
@@ -69,6 +76,10 @@ public class Hike {
         return "Hike{" +
                 "id=" + id +
                 ", dateOfJourney=" + dateOfJourney +
+<<<<<<< HEAD
+                ", route=" + route +
+=======
+>>>>>>> main
                 '}';
     }
 }

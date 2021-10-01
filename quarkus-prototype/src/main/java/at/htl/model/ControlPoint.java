@@ -1,9 +1,14 @@
 package at.htl.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
 
 @Entity
-public class ControlPoint {
+public class ControlPoint extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +19,10 @@ public class ControlPoint {
     private Double longitudeCoordinate;
 
     @ManyToOne
+<<<<<<< HEAD
+    @Cascade(CascadeType.ALL)
+=======
+>>>>>>> main
     private Route route;
 
     public ControlPoint() {
@@ -58,6 +67,8 @@ public class ControlPoint {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
+<<<<<<< HEAD
+=======
     public Route getRoute() {
         return route;
     }
@@ -66,6 +77,7 @@ public class ControlPoint {
         this.route = route;
     }
 
+>>>>>>> main
     @Override
     public String toString() {
         return "ControlPoint{" +

@@ -1,9 +1,11 @@
 package at.htl.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import javax.persistence.*;
 
 @Entity
-public class Route {
+public class Route extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +15,14 @@ public class Route {
     private String name;
     private Double length;
 
+<<<<<<< HEAD
+    public Route() {
+    }
+
+    public Route(String name, Double length) {
+        this.name = name;
+        this.length = length;
+=======
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    private Hike hike;
 
@@ -31,6 +41,7 @@ public class Route {
 
     public void setCsvId(Long csvId) {
         this.csvId = csvId;
+>>>>>>> main
     }
 
     public Long getId() {
