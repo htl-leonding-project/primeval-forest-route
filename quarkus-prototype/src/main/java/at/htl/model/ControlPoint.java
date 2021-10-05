@@ -19,10 +19,7 @@ public class ControlPoint extends PanacheEntityBase {
     private Double longitudeCoordinate;
 
     @ManyToOne
-<<<<<<< HEAD
     @Cascade(CascadeType.ALL)
-=======
->>>>>>> main
     private Route route;
 
     public ControlPoint() {
@@ -38,6 +35,7 @@ public class ControlPoint extends PanacheEntityBase {
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -67,8 +65,6 @@ public class ControlPoint extends PanacheEntityBase {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
-<<<<<<< HEAD
-=======
     public Route getRoute() {
         return route;
     }
@@ -77,7 +73,6 @@ public class ControlPoint extends PanacheEntityBase {
         this.route = route;
     }
 
->>>>>>> main
     @Override
     public String toString() {
         return "ControlPoint{" +

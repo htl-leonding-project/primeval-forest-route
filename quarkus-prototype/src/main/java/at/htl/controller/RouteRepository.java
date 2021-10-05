@@ -5,22 +5,18 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-<<<<<<< HEAD
-=======
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
->>>>>>> main
 import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RouteRepository implements PanacheRepository<Route> {
 
-<<<<<<< HEAD
     @Transactional
     public void save(Route route) {
         if (route != null) {
@@ -43,7 +39,6 @@ public class RouteRepository implements PanacheRepository<Route> {
         return findById(id);
     }
 
-=======
     public static String routeFile = "/routes.csv";
 
     public Route findByCsvId(Long csvId){
@@ -105,5 +100,4 @@ public class RouteRepository implements PanacheRepository<Route> {
         return fileData;*/
 
     }
->>>>>>> main
 }

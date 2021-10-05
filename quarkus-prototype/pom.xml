@@ -68,7 +68,6 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm-panache</artifactId>
     </dependency>
-<<<<<<< HEAD
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-db</artifactId>
@@ -82,9 +81,6 @@
       <version>3.21.0</version>
       <scope>test</scope>
     </dependency>
-
-=======
->>>>>>> main
   </dependencies>
   <build>
     <plugins>

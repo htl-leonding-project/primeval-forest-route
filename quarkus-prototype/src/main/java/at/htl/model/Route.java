@@ -15,17 +15,6 @@ public class Route extends PanacheEntityBase {
     private String name;
     private Double length;
 
-<<<<<<< HEAD
-    public Route() {
-    }
-
-    public Route(String name, Double length) {
-        this.name = name;
-        this.length = length;
-=======
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Hike hike;
-
     public Route() {
     }
 
@@ -41,7 +30,6 @@ public class Route extends PanacheEntityBase {
 
     public void setCsvId(Long csvId) {
         this.csvId = csvId;
->>>>>>> main
     }
 
     public Long getId() {

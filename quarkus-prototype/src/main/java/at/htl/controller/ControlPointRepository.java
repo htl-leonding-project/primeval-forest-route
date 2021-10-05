@@ -1,18 +1,13 @@
 package at.htl.controller;
 
-<<<<<<< HEAD
 import at.htl.model.ControlPoint;
-=======
 
 import at.htl.model.ControlPoint;
 import at.htl.model.Route;
->>>>>>> main
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-<<<<<<< HEAD
-=======
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -22,27 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
->>>>>>> main
 
 @ApplicationScoped
 public class ControlPointRepository implements PanacheRepository<ControlPoint> {
 
-<<<<<<< HEAD
-    @Transactional
-    public void save(ControlPoint controlPoint) {
-=======
     public static String controlPointsFile = "/controlpoints.csv";
 
     @Transactional
     public void saveControlPoint(ControlPoint controlPoint) {
->>>>>>> main
         if (controlPoint != null) {
             persist(controlPoint);
         }
     }
-<<<<<<< HEAD
-}
-=======
 
     @Transactional
     public void persistControlPoints() {
@@ -68,7 +54,6 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
 
             controlPoints.add(controlPoint);
         }
-
         return controlPoints;
     }
 
@@ -85,7 +70,6 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
                 .skip(1)
                 .map(s -> s.split(";"))
                 .collect(Collectors.toUnmodifiableList());
-    }
 
+    }
 }
->>>>>>> main
