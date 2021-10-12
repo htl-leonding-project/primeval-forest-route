@@ -1,6 +1,7 @@
 package at.htl.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -14,6 +15,10 @@ public class Route extends PanacheEntityBase {
 
     private String name;
     private Double length;
+
+    @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private GpxData gpxData;
 
     public Route() {
     }
@@ -54,6 +59,14 @@ public class Route extends PanacheEntityBase {
 
     public void setLength(Double length) {
         this.length = length;
+    }
+
+    public GpxData getGpxData() {
+        return gpxData;
+    }
+
+    public void setGpxData(GpxData gpxData) {
+        this.gpxData = gpxData;
     }
 
     @Override

@@ -57,12 +57,14 @@ public class RouteRepository implements PanacheRepository<Route> {
     public List<Route> generateRoutes() {
         List<String[]> fileData = readDataFromFile(routeFile);
         List<Route> routes = new ArrayList<>();
+        GpxDataRepository gpr = new GpxDataRepository();
 
         for (String[] routeString : fileData) {
             Route route = new Route();
             route.setCsvId(Long.parseLong(routeString[0]));
             route.setName(routeString[1]);
             route.setLength(Double.parseDouble(routeString[2]));
+            route.setGpxData(gpr.findById(Long.parseLong(routeString[4])));
 
             routes.add(route);
         }
