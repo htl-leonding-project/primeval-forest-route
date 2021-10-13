@@ -3,6 +3,7 @@ import {QuarkusBackendService} from "./quarkus-backend.service";
 import {RouteDto} from "./route-dto";
 import {HttpClient} from "@angular/common/http";
 import {readAndParseJson} from "@angular/cli/utilities/json-file";
+import {CoordinatesDto} from "./coordinates-dto";
 
 declare var ol: any;
 
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit{
 
   title = 'forest-trail';
   routes: RouteDto[] = [];
+  coordinates: CoordinatesDto[] = [];
   jsonArray: [] = [];
 
   constructor(public quarkusService: QuarkusBackendService,
@@ -26,10 +28,19 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
+    this.createMap();
+    this.getRoutes();
+    this.getCoordinates();
+
+    console.log(this.coordinates);
+    console.log(this.routes);
+  }
+
+  getRoutes() {
     this.quarkusService.getAllRoutes()
       .subscribe(r => {
         if (r != null) {
-          console.log(JSON.stringify(r));
+          //console.log(JSON.stringify(r));
           this.jsonArray = JSON.parse(JSON.stringify(r));
           for (const routeElement of this.jsonArray) {
             this.routes.push({
@@ -39,10 +50,11 @@ export class AppComponent implements OnInit{
               length: routeElement["length"]
             })
           }
-          console.log(this.routes);
         }
       })
+  }
 
+  createMap() {
     this.map = new ol.Map({
       target: 'map',
       layers: [
@@ -51,7 +63,7 @@ export class AppComponent implements OnInit{
         })
       ],
       view: new ol.View({
-        center: ol.proj.fromLonLat([73.8567, 18.5204]),
+        center: ol.proj.fromLonLat([13.493088, 54.41366]),
         zoom: 8
       })
       /*this.http.get<any>('localhost:8080/route/all').subscribe(res => {
@@ -60,5 +72,19 @@ export class AppComponent implements OnInit{
     })
   }
 
-
+  getCoordinates() {
+    this.quarkusService.getAllCoordinates()
+      .subscribe(c => {
+        if (c != null) {
+          //console.log(JSON.stringify(c));
+          this.jsonArray = JSON.parse(JSON.stringify(c));
+          for (const coElement of this.jsonArray) {
+            this.coordinates.push({
+              latitude: coElement["latitude"],
+              longitude: coElement["longitude"]
+            })
+          }
+        }
+      })
+  }
 }
