@@ -7,9 +7,17 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CoordinatesRepository implements PanacheRepository<Coordinates> {
+
+    @Transactional
+    public List<Coordinates> getAllCoordinates() {
+        return findAll()
+                .stream()
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     public List<Coordinates> persistCoordinates(int size, GPX gpx, List<Coordinates> coordinatesList) {
