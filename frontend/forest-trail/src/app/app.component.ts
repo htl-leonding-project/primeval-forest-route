@@ -2,10 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {QuarkusBackendService} from "./quarkus-backend.service";
 import {RouteDto} from "./route-dto";
 import {HttpClient} from "@angular/common/http";
-import {readAndParseJson} from "@angular/cli/utilities/json-file";
 import {CoordinatesDto} from "./coordinates-dto";
 
-declare var ol: any;
 
 @Component({
   selector: 'app-root',
@@ -15,8 +13,6 @@ declare var ol: any;
 export class AppComponent implements OnInit{
   latitude: number = 0;
   longitude: number = 0;
-
-  map: any;
 
   title = 'forest-trail';
   routes: RouteDto[] = [];
@@ -28,7 +24,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.createMap();
     this.getRoutes();
     this.getCoordinates();
 
@@ -54,24 +49,6 @@ export class AppComponent implements OnInit{
       })
   }
 
-  createMap() {
-    this.map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([13.493088, 54.41366]),
-        zoom: 8
-      })
-      /*this.http.get<any>('localhost:8080/route/all').subscribe(res => {
-        this.routes.concat(res.body);
-      })*/
-    })
-  }
-
   getCoordinates() {
     this.quarkusService.getAllCoordinates()
       .subscribe(c => {
@@ -85,6 +62,10 @@ export class AppComponent implements OnInit{
             })
           }
         }
+        console.log(this.coordinates[0].longitude);
+        console.log(this.coordinates[0].latitude);
       })
   }
 }
+
+
