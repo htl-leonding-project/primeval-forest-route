@@ -1,4 +1,4 @@
 export interface CoordinatesDto {
-  latitude: String | null;
-  longitude: String | null;
+  latitude?: number | null;
+  longitude?: number | null;
 }

@@ -3,12 +3,14 @@ package at.htl.controller;
 import at.htl.model.ControlPoint;
 
 import at.htl.model.ControlPoint;
+import at.htl.model.Coordinates;
 import at.htl.model.Route;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -28,6 +30,31 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
         if (controlPoint != null) {
             persist(controlPoint);
         }
+    }
+
+    @Transactional
+    public List<Coordinates> getCoordinatesByRouteId(Long id) {
+        List<ControlPoint> controlPoints = findAll().stream().collect(Collectors.toList());
+        List<Coordinates> coordinates = new ArrayList<>();
+        Coordinates coord;
+
+        for (ControlPoint controlPoint : controlPoints) {
+            if (controlPoint.getRoute().getCsvId().equals(id)) {
+                coord = new Coordinates(controlPoint.getLongitudeCoordinate(), controlPoint.getLatitudeCoordinate());
+                coordinates.add(coord);
+            }
+        }
+
+
+
+        return coordinates;
+    }
+
+    @Transactional
+    public List<ControlPoint> getAllControlpoints() {
+        return findAll()
+                .stream()
+                .collect(Collectors.toList());
     }
 
     @Transactional
