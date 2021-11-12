@@ -18,7 +18,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     @Inject
     CoordinatesRepository coordinatesRepository;
 
-    public static String gpxData = "C:/Users/jratz/school/5AHITM/ITP/Projekt/primeval-forest-route/primeval-forest-route/backend/quarkus-prototype/src/main/resources/route1.gpx";
+    public static String gpxData = "../src/main/resources/route1.gpx";
 
     @Transactional
     public void persistGpx() throws IOException {
