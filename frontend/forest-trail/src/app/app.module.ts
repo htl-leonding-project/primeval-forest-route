@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { MapComponent } from './map/map.component';
+import { UploadImageComponent } from './upload-image/upload-image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent
+    MapComponent,
+    UploadImageComponent
   ],
   imports: [
     BrowserModule,
