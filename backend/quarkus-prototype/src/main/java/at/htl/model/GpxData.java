@@ -2,8 +2,8 @@ package at.htl.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,19 +11,19 @@ public class GpxData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    @OneToMany()
-    List<Coordinates> routePoints;
+    @OneToMany
+    private List<Coordinates> routePoints;
 
     public GpxData() {
     }
 
-    public GpxData(String name, List<Coordinates> coordinates) {
+    public GpxData(String name, List<Coordinates> routePoints) {
         this.name = name;
-        this.routePoints = coordinates;
+        this.routePoints = routePoints;
     }
 
     public Long getId() {
@@ -55,7 +55,7 @@ public class GpxData {
         return "GpxData{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", routePoints=" + routePoints +
+                ", routePoints=" + name +
                 '}';
     }
 }

@@ -45,8 +45,6 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
             }
         }
 
-
-
         return coordinates;
     }
 
