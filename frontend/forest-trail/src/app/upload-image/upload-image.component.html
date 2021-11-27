@@ -1,10 +1,10 @@
 <label class="btn btn-default">
-  <input type="file" accept="image/*" multiple (change)="selectFile($event)" />
+  <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)" />
 </label>
 
 <button
   class="btn btn-success"
-  [disabled]="!selectedFile"
+  [disabled]="this.fileValid == false"
   (click)="uploadFile()"
 >
   Upload
@@ -12,15 +12,15 @@
 
 <div class="alert alert-light" role="alert">{{ message }}</div>
 
-<div class="card">
+<!--<div class="card">
   <div class="card-header">List of Images</div>
   <ul
     class="list-group list-group-flush"
-    *ngFor="let file of fileInfos | async"
+    *ngFor="let file of selectedFile.file | async"
   >
     <li class="list-group-item">
       <p><a href="{{ file.url }}">{{ file.name }}</a></p>
       <img src="{{ file.url }}" alt="{{ file.name }}" height="80px">
     </li>
   </ul>
-</div>
+</div>-->

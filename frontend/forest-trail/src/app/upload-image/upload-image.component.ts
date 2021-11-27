@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-upload-image',
@@ -9,18 +8,35 @@ import {Observable} from "rxjs";
 })
 export class UploadImageComponent {
 
-  selectedFile: File;
+  selectedFile?: ImageSnippet;
   message = '';
+  fileValid: boolean = false;
 
-  fileInfos: Observable<any>;
+  constructor(private service: QuarkusBackendService) {}
 
-  constructor(private service: QuarkusBackendService) { }
+  processFile(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
 
-  selectFile(event) {
+    reader.addEventListener('load', (ev: any) => {
+      this.selectedFile = new ImageSnippet(ev.target.result, file);
+      this.fileValid = !this.fileValid;
+    });
+    reader.readAsDataURL(file);
 
   }
 
   uploadFile() {
-
+    if (this.fileValid) {
+      this.service.uploadImage(this.selectedFile!.file).subscribe(
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
+}
+
+class ImageSnippet {
+  constructor(public src: string, public file: File) {}
 }

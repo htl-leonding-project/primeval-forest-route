@@ -26,7 +26,7 @@ export class QuarkusBackendService {
     )
   }
 
-  uploadFile(file: File): Observable<HttpEvent<any>> {
+  uploadImage(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append("file", file);
