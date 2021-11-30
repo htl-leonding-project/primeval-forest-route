@@ -15,6 +15,7 @@ public class GpxData {
 
     private String name;
 
+    @JsonbTransient
     @OneToMany
     private List<Coordinates> routePoints;
 

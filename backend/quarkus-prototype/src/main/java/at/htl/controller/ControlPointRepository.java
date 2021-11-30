@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,19 +34,21 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
     }
 
     @Transactional
-    public List<Coordinates> getCoordinatesByRouteId(Long id) {
-        List<ControlPoint> controlPoints = findAll().stream().collect(Collectors.toList());
-        List<Coordinates> coordinates = new ArrayList<>();
-        Coordinates coord;
+    public List<ControlPoint> getControlPointByRouteId(Long id) {
+        List<ControlPoint> controlPoints = getAllControlpoints();
+        List<ControlPoint> specificControlPoints = new ArrayList<>();
 
         for (ControlPoint controlPoint : controlPoints) {
-            if (controlPoint.getRoute().getCsvId().equals(id)) {
-                coord = new Coordinates(controlPoint.getLongitudeCoordinate(), controlPoint.getLatitudeCoordinate());
-                coordinates.add(coord);
+            System.out.println(controlPoint);
+        }
+
+        for (int i = 0; i < controlPoints.toArray().length; i++) {
+            if(Objects.equals(controlPoints.get(i).getRoute().getId(), id)) {
+                specificControlPoints.add(controlPoints.get(i));
             }
         }
 
-        return coordinates;
+        return specificControlPoints;
     }
 
     @Transactional
@@ -58,7 +61,7 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
     @Transactional
     public void persistControlPoints() {
         List<ControlPoint> controlPoints = generateControlPoints();
-        System.out.println(controlPoints);
+        //System.out.println(controlPoints);
         for (ControlPoint controlPoint : controlPoints) {
             persist(controlPoint);
         }

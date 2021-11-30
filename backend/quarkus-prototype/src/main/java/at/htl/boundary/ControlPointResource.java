@@ -31,9 +31,9 @@ public class ControlPointResource {
     }
 
     @GET
-    @Path("/{routeId}")
+    @Path("{routeId}")
     public Response getCoordinatesByRouteId(@PathParam("routeId") Long id) {
-        return Response.ok(controlPointRepository.getCoordinatesByRouteId(id)).build();
+        return Response.ok(controlPointRepository.getControlPointByRouteId(id)).build();
     }
 
     @POST
