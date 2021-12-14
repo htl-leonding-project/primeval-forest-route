@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
         GPX gpx = GPX.read(gpxData);
         int size;
         String name;
-        GpxData gpxEntity = new GpxData();
         List<Coordinates> coordinatesList = new ArrayList<>();
 
         size = gpx.getTracks().get(0).getSegments().get(0).getPoints().size();
@@ -40,9 +40,6 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
         coordinatesList = coordinatesRepository.persistCoordinates(size, gpx, coordinatesList);
 
-        gpxEntity.setName(name);
-        gpxEntity.setRoutePoints(coordinatesList);
-
-        return gpxEntity;
+        return new GpxData(name, coordinatesList);
     }
 }

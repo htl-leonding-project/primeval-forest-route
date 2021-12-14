@@ -48,7 +48,7 @@ public class RouteRepository implements PanacheRepository<Route> {
     @Transactional
     public void persistRoute() {
         List<Route> routes = generateRoutes();
-        System.out.println(routes);
+        //System.out.println(routes);
         for (Route r : routes) {
             persist(r);
         }

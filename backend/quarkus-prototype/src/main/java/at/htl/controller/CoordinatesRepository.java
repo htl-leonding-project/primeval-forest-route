@@ -1,6 +1,7 @@
 package at.htl.controller;
 
 import at.htl.model.Coordinates;
+import at.htl.model.GpxData;
 import io.jenetics.jpx.GPX;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
@@ -28,7 +29,7 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
             double longitude = Double.parseDouble(gpx.getTracks().get(0).getSegments().get(0).getPoints().get(i).getLongitude().toString());
             double latitude = Double.parseDouble(gpx.getTracks().get(0).getSegments().get(0).getPoints().get(i).getLatitude().toString());
             coordinates.setLongitude(longitude);
-            coordinates.setLattitude(latitude);
+            coordinates.setLatitude(latitude);
 
             persist(coordinates);
 

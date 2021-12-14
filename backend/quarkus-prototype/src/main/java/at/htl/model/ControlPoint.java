@@ -1,10 +1,12 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +20,7 @@ public class ControlPoint extends PanacheEntityBase {
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
+    @JsonbTransient
     @ManyToOne
     @Cascade(CascadeType.ALL)
     private Route route;
@@ -35,7 +38,6 @@ public class ControlPoint extends PanacheEntityBase {
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;

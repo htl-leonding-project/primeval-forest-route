@@ -1,19 +1,20 @@
 package at.htl.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.*;
 
 @Entity
 public class Coordinates {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Double longitude;
-    Double latitude;
+    private Double longitude;
+    private Double latitude;
 
     public Coordinates() {
     }
@@ -35,7 +36,7 @@ public class Coordinates {
         return latitude;
     }
 
-    public void setLattitude(Double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 }

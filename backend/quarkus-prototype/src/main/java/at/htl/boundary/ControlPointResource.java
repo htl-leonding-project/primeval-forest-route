@@ -1,8 +1,10 @@
 package at.htl.boundary;
 
+import at.htl.controller.ControlPointRepository;
 import at.htl.model.ControlPoint;
 import at.htl.model.Route;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,12 +19,21 @@ import java.util.LinkedList;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ControlPointResource {
 
+    @Inject
+    ControlPointRepository controlPointRepository;
+
     private LinkedList<ControlPoint> controlPoints = new LinkedList<>();
 
     @GET
-    @Path("getAllControlPoints")
+    @Path("all")
     public Response getControlPoints() {
-        return Response.ok(controlPoints).build();
+        return Response.ok(controlPointRepository.getAllControlpoints()).build();
+    }
+
+    @GET
+    @Path("{routeId}")
+    public Response getCoordinatesByRouteId(@PathParam("routeId") Long id) {
+        return Response.ok(controlPointRepository.getControlPointByRouteId(id)).build();
     }
 
     @POST

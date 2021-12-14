@@ -7,6 +7,8 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import { MapComponent } from './map/map.component';
 import { UploadImageComponent } from './upload-image/upload-image.component';
 
+import { MarkerService } from './marker.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,9 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
     HttpClientModule,
     LeafletModule
   ],
-  providers: [],
+  providers: [
+    MarkerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
