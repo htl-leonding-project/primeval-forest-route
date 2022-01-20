@@ -20,7 +20,6 @@ public class ControlPoint extends PanacheEntityBase {
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
-    @JsonbTransient
     @ManyToOne
     @Cascade(CascadeType.ALL)
     private Route route;

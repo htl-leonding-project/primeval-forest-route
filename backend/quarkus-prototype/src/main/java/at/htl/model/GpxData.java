@@ -1,12 +1,23 @@
 package at.htl.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "GpxData.findAll",
+                query = "select g from GpxData g"
+        ),
+        @NamedQuery(
+                name = "GpxData.findById",
+                query = "select g from GpxData g where g.id = :INT"
+        ),
+        @NamedQuery(
+                name = "GpxData.findByName",
+                query = "select g from GpxData g where g.name = :NAME"
+        )
+})
 public class GpxData {
 
     @Id
@@ -15,11 +26,14 @@ public class GpxData {
 
     private String name;
 
-    @JsonbTransient
-    @OneToMany
+    @OneToMany(mappedBy = "gpxDataId", fetch = FetchType.EAGER)
     private List<Coordinates> routePoints;
 
     public GpxData() {
+    }
+
+    public GpxData(List<Coordinates> routePoints) {
+        this.routePoints = routePoints;
     }
 
     public GpxData(String name, List<Coordinates> routePoints) {

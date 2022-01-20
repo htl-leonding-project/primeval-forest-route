@@ -5,6 +5,8 @@ import {Observable} from "rxjs";
 import {RouteDto} from "./route-dto";
 import {CoordinatesDto} from "./coordinates-dto";
 import {ControlPointDto} from "./controlpoint-dto";
+import {GpxdataDto} from "./gpxdata-dto";
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,12 @@ export class QuarkusBackendService {
   getAllControlPoints(): Observable<ControlPointDto[]> {
     return this.http.get<ControlPointDto[]>(
       "http://localhost:8080/api/controlPoint/all"
+    )
+  }
+
+  getAllGpxData(): Observable<GpxdataDto[]> {
+    return this.http.get<GpxdataDto[]>(
+      "http://localhost:8080/api/gpxData/all"
     )
   }
 }

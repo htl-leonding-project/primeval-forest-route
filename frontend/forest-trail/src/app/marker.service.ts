@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as L from 'leaflet';
 
-import {ControlPointDto} from "./controlpoint-dto";
 import {CoordinatesDto} from "./coordinates-dto";
 import {QuarkusBackendService} from "./quarkus-backend.service";
+import {ControlPointDto} from "./controlpoint-dto";
 
 @Injectable({
   providedIn: 'root'
