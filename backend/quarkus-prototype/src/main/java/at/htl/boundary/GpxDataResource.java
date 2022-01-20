@@ -30,6 +30,7 @@ public class GpxDataResource {
     @Path("{id}")
     public Response getCoordinatesListWithRouteId(@PathParam("id") Long i) {
         return Response.ok(gpxDataRepository.getCoordinateList(i)).build();
+    }
 
     @GET
     public Response getAllGpxData() {

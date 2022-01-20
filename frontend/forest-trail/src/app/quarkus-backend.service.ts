@@ -28,6 +28,12 @@ export class QuarkusBackendService {
     )
   }
 
+  getAllControlPoints(): Observable<ControlPointDto[]> {
+    return this.http.get<ControlPointDto[]>(
+      `${this.baseUrl}/api/controlPoint/all`
+    )
+  }
+
   uploadImage(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
@@ -50,7 +56,7 @@ export class QuarkusBackendService {
 
   getAllGpxData(): Observable<GpxdataDto[]> {
     return this.http.get<GpxdataDto[]>(
-      "http://localhost:8080/api/gpxData/all"
+      `${this.baseUrl}/api/gpx/all`
     )
   }
 }

@@ -4,6 +4,8 @@ import {RouteDto} from "./route-dto";
 import {HttpClient} from "@angular/common/http";
 import {CoordinatesDto} from "./coordinates-dto";
 import {GpxdataDto} from "./gpxdata-dto";
+import * as L from "leaflet";
+import {ControlPointDto} from "./controlpoint-dto";
 
 
 @Component({
@@ -19,6 +21,7 @@ export class AppComponent implements OnInit{
   routes: RouteDto[] = [];
   coordinates: CoordinatesDto[] = [];
   coordinat: GpxdataDto[] = [];
+  controlpoints: ControlPointDto[] = [];
   jsonArray: [] = [];
 
   constructor(public quarkusService: QuarkusBackendService,
@@ -29,10 +32,30 @@ export class AppComponent implements OnInit{
     this.getRoutes();
     this.getCoordinates();
     this.getGpxData();
+    this.getControlPoints();
 
     console.log(this.coordinates);
+    console.log(this.coordinates);
     console.log(this.routes);
-    console.log(this.coordinat)
+    console.log(this.coordinat);
+  }
+
+  getControlPoints() {
+    this.quarkusService.getAllControlPoints()
+      .subscribe(r => {
+        if (r != null) {
+          //console.log(JSON.stringify(r));
+          this.jsonArray = JSON.parse(JSON.stringify(r));
+          for (const cpElement of this.jsonArray) {
+            this.controlpoints.push({
+              id: cpElement["id"],
+              latitude: cpElement["latitudeCoordinate"],
+              longitude: cpElement["longitudeCoordinate"],
+              name: cpElement["name"]
+            })
+          }
+        }
+      })
   }
 
   getRoutes() {
