@@ -8,8 +8,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.Consumes;
 
-@Path("gpxData")
+@Path("gpx")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class GpxDataResource {
 
     @Inject
@@ -25,5 +30,9 @@ public class GpxDataResource {
     @Path("{id}")
     public Response getCoordinatesListWithRouteId(@PathParam("id") Long i) {
         return Response.ok(gpxDataRepository.getCoordinateList(i)).build();
+
+    @GET
+    public Response getAllGpxData() {
+        return Response.ok().build();
     }
 }
