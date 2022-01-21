@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {RouteDto} from "./route-dto";
 import {CoordinatesDto} from "./coordinates-dto";
 import {PictureDto} from "./picture-dto";
+import {GpxdataDto} from "./gpxdata-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class QuarkusBackendService {
     )
   }
 
-  uploadImage(file: File): Observable<HttpEvent<any>> {
+  uploadImage(file: File): Observable<PictureDto> {
     const formData: FormData = new FormData();
 
     formData.append("value", file);
