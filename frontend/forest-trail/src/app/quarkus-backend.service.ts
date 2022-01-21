@@ -26,7 +26,7 @@ export class QuarkusBackendService {
     )
   }
 
-  uploadImage(file: File): Observable<PictureDto> {
+  uploadImage(file: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
     formData.append("value", file);
@@ -42,5 +42,11 @@ export class QuarkusBackendService {
 
   getImage(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/picture/getImageById/${id}`);
+  }
+
+  getAllGpxData(): Observable<GpxdataDto[]> {
+    return this.http.get<GpxdataDto[]>(
+      `${this.baseUrl}/api/gpx/all`
+    )
   }
 }
