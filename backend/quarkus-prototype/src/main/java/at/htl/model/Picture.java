@@ -14,9 +14,7 @@ public class Picture extends PanacheEntityBase {
 
     private String fileName;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] imageData;
+    private String imageUrl;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
@@ -29,10 +27,11 @@ public class Picture extends PanacheEntityBase {
     public Picture() {
     }
 
-    public Picture(String fileName, byte[] imageData, ControlPoint controlPoint) {
+    public Picture(String fileName, String imageUrl, ControlPoint controlPoint, Hike hike) {
         this.fileName = fileName;
-        this.imageData = imageData;
+        this.imageUrl = imageUrl;
         this.controlPoint = controlPoint;
+        this.hike = hike;
     }
 
     public Long getId() {
@@ -51,12 +50,12 @@ public class Picture extends PanacheEntityBase {
         this.fileName = fileName;
     }
 
-    public byte[] getImageData() {
-        return imageData;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public ControlPoint getControlPoint() {
@@ -67,12 +66,22 @@ public class Picture extends PanacheEntityBase {
         this.controlPoint = controlPoint;
     }
 
+    public Hike getHike() {
+        return hike;
+    }
+
+    public void setHike(Hike hike) {
+        this.hike = hike;
+    }
+
     @Override
     public String toString() {
         return "Picture{" +
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
-                ", imageData=" + Arrays.toString(imageData) +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", controlPoint=" + controlPoint +
+                ", hike=" + hike +
                 '}';
     }
 }

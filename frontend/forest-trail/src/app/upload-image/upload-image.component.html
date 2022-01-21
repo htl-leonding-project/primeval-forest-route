@@ -12,15 +12,6 @@
 
 <div class="alert alert-light" role="alert">{{ message }}</div>
 
-<!--<div class="card">
-  <div class="card-header">List of Images</div>
-  <ul
-    class="list-group list-group-flush"
-    *ngFor="let file of selectedFile.file | async"
-  >
-    <li class="list-group-item">
-      <p><a href="{{ file.url }}">{{ file.name }}</a></p>
-      <img src="{{ file.url }}" alt="{{ file.name }}" height="80px">
-    </li>
-  </ul>
-</div>-->
+<div *ngIf="sentImg.fileName != null" style="padding: 10px;">
+  <p>File was uploaded: {{sentImg.fileName}}</p>
+</div>
