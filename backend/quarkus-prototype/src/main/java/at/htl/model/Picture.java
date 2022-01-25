@@ -18,6 +18,10 @@ public class Picture extends PanacheEntityBase {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
+    private Coordinates coordinates;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     private ControlPoint controlPoint;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -27,9 +31,10 @@ public class Picture extends PanacheEntityBase {
     public Picture() {
     }
 
-    public Picture(String fileName, String imageUrl, ControlPoint controlPoint, Hike hike) {
+    public Picture(String fileName, String imageUrl, Coordinates coordinates, ControlPoint controlPoint, Hike hike) {
         this.fileName = fileName;
         this.imageUrl = imageUrl;
+        this.coordinates = coordinates;
         this.controlPoint = controlPoint;
         this.hike = hike;
     }
@@ -60,6 +65,14 @@ public class Picture extends PanacheEntityBase {
 
     public ControlPoint getControlPoint() {
         return controlPoint;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
     public void setControlPoint(ControlPoint controlPoint) {

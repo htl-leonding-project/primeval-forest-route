@@ -1,5 +1,6 @@
 package at.htl.controller;
 
+import at.htl.model.Coordinates;
 import at.htl.model.ImageMultipartBody;
 import at.htl.model.Picture;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -25,6 +26,9 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
     @Inject
     EntityManager em;
+
+    @Inject
+    ImageDataExtractor imageDataExtractor;
 
     Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -58,7 +62,7 @@ public class PictureRepository implements PanacheRepository<Picture> {
         Picture picture = this.save(
                 new Picture(
                         imageMultipartBody.fileName,
-                        null, null, null)
+                        null, null, null, null)
         );
 
         var path = new File(
@@ -70,6 +74,9 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
         try(var os = new FileOutputStream(path)) {
             file.transferTo(os);
+            Coordinates coordinates = imageDataExtractor.getCoordinates(path);
+            System.out.println(coordinates.toString());
+            picture.setCoordinates(coordinates);
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
             return null;
