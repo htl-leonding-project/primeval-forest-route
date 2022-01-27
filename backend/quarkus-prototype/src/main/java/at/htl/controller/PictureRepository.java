@@ -60,8 +60,43 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
     @Transactional
     public Picture uploadImage(ImageMultipartBody imageMultipartBody) {
+
         var file = imageMultipartBody.inputStream;
+        Picture picture = this.save(
+                new Picture(
+                        imageMultipartBody.fileName,
+                        null, null, null, null)
+        );
+
+        var path = new File(
+                imagePath,
+                picture.getId() + "_" + picture.getFileName() + "_cp_picture.jpg"
+        );
+
+        picture.setImageUrl(path.getPath());
+
+        try(var os = new FileOutputStream(path)) {
+            file.transferTo(os);
+            Coordinates coordinates = imageDataExtractor.getCoordinates(path);
+            System.out.println(coordinates.toString());
+            picture.setCoordinates(coordinates);
+
+            // TODO: if statement ignored for test purpose
+            //if (minDistance <= 200 && minDistance != -1 && index != -1) {
+            picture.setControlPoint(this.getClosestControlPoint(coordinates));
+            //}
+
+        } catch (IOException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return null;
+        }
+        return this.save(picture);
+    }
+
+    public ControlPoint getClosestControlPoint(Coordinates pictureCoordinates) {
         int minDistance = -1;
+        int distance;
+        int index = -1;
         List<ControlPoint> controlPoints = controlPointRepository
                 .findAll()
                 .stream()
@@ -78,50 +113,20 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
         System.out.println(cpCoordinates);
 
-        Picture picture = this.save(
-                new Picture(
-                        imageMultipartBody.fileName,
-                        null, null, null, null)
-        );
+        for (int i = 0; i < cpCoordinates.size(); i++) {
+            Coordinates cpCoordinate = cpCoordinates.get(i);
+            distance = this.getDistanceBetweenTwoCoordinates(
+                    pictureCoordinates,
+                    cpCoordinate
+            );
 
-        var path = new File(
-                imagePath,
-                picture.getId() + "_" + picture.getFileName() + "_cp_picture.jpg"
-        );
-
-        picture.setImageUrl(path.getPath());
-
-        try(var os = new FileOutputStream(path)) {
-            int distance = -1;
-            int index = -1;
-            file.transferTo(os);
-            Coordinates coordinates = imageDataExtractor.getCoordinates(path);
-            System.out.println(coordinates.toString());
-            picture.setCoordinates(coordinates);
-
-            for (int i = 0; i < cpCoordinates.size(); i++) {
-                Coordinates cpCoordinate = cpCoordinates.get(i);
-                distance = this.getDistanceBetweenTwoCoordinates(
-                        coordinates,
-                        cpCoordinate
-                );
-
-                if (minDistance > distance || minDistance == -1) {
-                    minDistance = distance;
-                    index = i;
-                }
+            if (minDistance > distance || minDistance == -1) {
+                minDistance = distance;
+                index = i;
             }
-            System.out.println(minDistance);
-            // TODO: if statement ignored for test purpose
-            //if (minDistance <= 200 && minDistance != -1 && index != -1) {
-                picture.setControlPoint(controlPoints.get(index));
-            //}
-
-        } catch (IOException e) {
-            logger.log(Level.WARNING, e.getMessage());
-            return null;
         }
-        return this.save(picture);
+        System.out.println(minDistance);
+        return controlPoints.get(index);
     }
 
     public int getDistanceBetweenTwoCoordinates(Coordinates pictureCoordinate, Coordinates controlPointCoordinate) {
