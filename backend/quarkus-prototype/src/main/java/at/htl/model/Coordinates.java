@@ -7,6 +7,7 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "COORDINATES")
 @NamedQueries({
         @NamedQuery(
                 name = "Coordinates.getByCoordinates",
@@ -22,9 +23,9 @@ public class Coordinates {
     private Double longitude;
     private Double latitude;
 
-    @JoinColumn
     @ManyToOne
-    GpxData gpxDataId;
+    @JoinTable(name = "GPXDATA_COORDINATES_LINK")
+    GpxData gpxData;
 
     public Coordinates() {
     }
@@ -34,10 +35,10 @@ public class Coordinates {
         this.latitude = latitude;
     }
 
-    public Coordinates(Double longitude, Double latitude, GpxData gpxDataId) {
+    public Coordinates(Double longitude, Double latitude, GpxData gpxData) {
         this.longitude = longitude;
         this.latitude = latitude;
-        this.gpxDataId = gpxDataId;
+        this.gpxData = gpxData;
     }
 
     public Double getLongitude() {
@@ -56,12 +57,12 @@ public class Coordinates {
         this.latitude = latitude;
     }
 
-    public GpxData getGpxDataId() {
-        return gpxDataId;
+    public GpxData getGpxData() {
+        return gpxData;
     }
 
-    public void setGpxDataId(GpxData gpxDataId) {
-        this.gpxDataId = gpxDataId;
+    public void setGpxData(GpxData gpxData) {
+        this.gpxData = gpxData;
     }
 
     @Override
@@ -70,7 +71,7 @@ public class Coordinates {
                 "id=" + id +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", gpxDataId=" + gpxDataId +
+                ", gpxData=" + gpxData +
                 '}';
     }
 }

@@ -22,11 +22,12 @@ export class MarkerService {
 
     // this.getControlPoints(map);
     this.getCoordinates(map)
+    this.getControlPoints(map)
 
 
   }
 
-/*  getControlPoints(map: L.Map) {
+  getControlPoints(map: L.Map) {
     this.quarkusService.getAllControlPoints()
       .subscribe(r => {
         if (r != null) {
@@ -45,12 +46,13 @@ export class MarkerService {
           const lat = this.controlpoints[i].latitude;
           const lon = this.controlpoints[i].longitude;
 
+          // @ts-ignore
           const marker = L.marker([lat, lon]);
 
           marker.addTo(map);
         }
       })
-  }*/
+  }
 
   getCoordinates(map: L.Map) {
     this.quarkusService.getAllCoordinates()

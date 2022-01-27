@@ -1,9 +1,11 @@
 package at.htl.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "GPXDATA")
 @NamedQueries({
         @NamedQuery(
                 name = "GpxData.findAll",
@@ -26,14 +28,18 @@ public class GpxData {
 
     private String name;
 
-    @OneToMany(mappedBy = "gpxDataId", fetch = FetchType.EAGER)
-    private List<Coordinates> routePoints;
+    @OneToMany(mappedBy = "gpxData", fetch = FetchType.EAGER, cascade={CascadeType.PERSIST,  CascadeType.REMOVE})
+    private List<Coordinates> routePoints = new ArrayList<>();
 
     public GpxData() {
     }
 
     public GpxData(List<Coordinates> routePoints) {
         this.routePoints = routePoints;
+    }
+
+    public GpxData(String name) {
+        this.name = name;
     }
 
     public GpxData(String name, List<Coordinates> routePoints) {
