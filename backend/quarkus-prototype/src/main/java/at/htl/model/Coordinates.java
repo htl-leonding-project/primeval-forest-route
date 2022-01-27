@@ -45,6 +45,12 @@ public class Coordinates {
         this.latitude = latitude;
     }
 
+    public Coordinates(Long id, Double longitude, Double latitude) {
+        this.id = id;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     public Coordinates(Double longitude, Double latitude, GpxData gpxDataId) {
         this.longitude = longitude;
         this.latitude = latitude;

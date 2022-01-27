@@ -1,5 +1,6 @@
 package at.htl.controller;
 
+import at.htl.model.ControlPoint;
 import at.htl.model.Coordinates;
 import at.htl.model.ImageMultipartBody;
 import at.htl.model.Picture;
@@ -11,8 +12,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PictureRepository implements PanacheRepository<Picture> {
@@ -25,6 +29,9 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
     @Inject
     ImageDataExtractor imageDataExtractor;
+
+    @Inject
+    ControlPointRepository controlPointRepository;
 
     Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -54,6 +61,22 @@ public class PictureRepository implements PanacheRepository<Picture> {
     @Transactional
     public Picture uploadImage(ImageMultipartBody imageMultipartBody) {
         var file = imageMultipartBody.inputStream;
+        int minDistance = -1;
+        List<ControlPoint> controlPoints = controlPointRepository
+                .findAll()
+                .stream()
+                .collect(Collectors.toList());
+        List<Coordinates> cpCoordinates = controlPoints
+                .stream()
+                .map(c ->
+                        new Coordinates(
+                                c.getId(),
+                                c.getLongitudeCoordinate(),
+                                c.getLatitudeCoordinate()
+                        ))
+                .collect(Collectors.toList());
+
+        System.out.println(cpCoordinates);
 
         Picture picture = this.save(
                 new Picture(
@@ -69,14 +92,58 @@ public class PictureRepository implements PanacheRepository<Picture> {
         picture.setImageUrl(path.getPath());
 
         try(var os = new FileOutputStream(path)) {
+            int distance = -1;
+            int index = -1;
             file.transferTo(os);
             Coordinates coordinates = imageDataExtractor.getCoordinates(path);
             System.out.println(coordinates.toString());
             picture.setCoordinates(coordinates);
+
+            for (int i = 0; i < cpCoordinates.size(); i++) {
+                Coordinates cpCoordinate = cpCoordinates.get(i);
+                distance = this.getDistanceBetweenTwoCoordinates(
+                        coordinates,
+                        cpCoordinate
+                );
+
+                if (minDistance > distance || minDistance == -1) {
+                    minDistance = distance;
+                    index = i;
+                }
+            }
+            System.out.println(minDistance);
+            // TODO: if statement ignored for test purpose
+            //if (minDistance <= 200 && minDistance != -1 && index != -1) {
+                picture.setControlPoint(controlPoints.get(index));
+            //}
+
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
             return null;
         }
         return this.save(picture);
+    }
+
+    public int getDistanceBetweenTwoCoordinates(Coordinates pictureCoordinate, Coordinates controlPointCoordinate) {
+
+        double lon1 = Math.toRadians(pictureCoordinate.getLongitude());
+        double lon2 = Math.toRadians(controlPointCoordinate.getLongitude());
+        double lat1 = Math.toRadians(pictureCoordinate.getLatitude());
+        double lat2 = Math.toRadians(controlPointCoordinate.getLatitude());
+
+        // Haversine formula
+        double dlon = lon2 - lon1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth in kilometers.
+        double r = 6371;
+
+        // calculate the result
+        return (int) ((c * r) * 1000);
     }
 }
