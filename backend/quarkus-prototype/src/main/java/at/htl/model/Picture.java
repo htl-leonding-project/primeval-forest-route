@@ -3,7 +3,6 @@ package at.htl.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 public class Picture extends PanacheEntityBase {

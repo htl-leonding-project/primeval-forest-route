@@ -4,17 +4,13 @@ import at.htl.model.Coordinates;
 import at.htl.model.ImageMultipartBody;
 import at.htl.model.Picture;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.quarkus.vertx.http.runtime.devmode.Json;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

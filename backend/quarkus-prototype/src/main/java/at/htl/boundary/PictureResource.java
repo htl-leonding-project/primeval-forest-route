@@ -29,12 +29,6 @@ public class PictureResource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getImageById(@PathParam("id") Long id) {
         return Response.ok(repo.getPictureById(id)).build();
-        /*Map<Picture, InputStream> pictureMap = repo.getPictureById(id);
-        if (!pictureMap.isEmpty()) {
-            System.out.println(pictureMap);
-            return Response.ok(pictureMap).build();
-        }*/
-        // return Response.status(404).build();
     }
 
     @POST

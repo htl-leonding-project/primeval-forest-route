@@ -41,14 +41,7 @@ export class UploadImageComponent {
       })
     }
   }
-  getFile() {
-    if (this.sentImg.id != undefined) {
-      this.service.getImage(this.sentImg.id).subscribe( res => {
-        console.log(res);
-        this.sentImg.imageData = res;
-      })
-    }
-  }
+
 }
 
 class ImageSnippet {
