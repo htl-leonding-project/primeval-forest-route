@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
     this.getRoutes();
     this.getCoordinates();
     this.getGpxData();
-    this.getControlPoints();
+    //this.getControlPoints();
 
     console.log(this.controlpoints);
     console.log(this.coordinates);
@@ -40,23 +40,23 @@ export class AppComponent implements OnInit{
     console.log(this.coordinat);
   }
 
-  getControlPoints() {
-    this.quarkusService.getAllControlPoints()
-      .subscribe(r => {
-        if (r != null) {
-          //console.log(JSON.stringify(r));
-          this.jsonArray = JSON.parse(JSON.stringify(r));
-          for (const cpElement of this.jsonArray) {
-            this.controlpoints.push({
-              id: cpElement["id"],
-              latitude: cpElement["latitudeCoordinate"],
-              longitude: cpElement["longitudeCoordinate"],
-              name: cpElement["name"]
-            })
-          }
-        }
-      })
-  }
+  // getControlPoints() {
+  //   this.quarkusService.getAllControlPoints()
+  //     .subscribe(r => {
+  //       if (r != null) {
+  //         //console.log(JSON.stringify(r));
+  //         this.jsonArray = JSON.parse(JSON.stringify(r));
+  //         for (const cpElement of this.jsonArray) {
+  //           this.controlpoints.push({
+  //             id: cpElement["id"],
+  //             latitude: cpElement["latitudeCoordinate"],
+  //             longitude: cpElement["longitudeCoordinate"],
+  //             name: cpElement["name"]
+  //           })
+  //         }
+  //       }
+  //     })
+  // }
 
   getRoutes() {
     this.quarkusService.getAllRoutes()

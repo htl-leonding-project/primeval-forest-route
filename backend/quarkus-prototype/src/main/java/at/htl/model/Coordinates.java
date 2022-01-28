@@ -3,11 +3,12 @@ package at.htl.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name = "COORDINATES")
 @NamedQueries({
         @NamedQuery(
                 name = "Coordinates.getByCoordinates",
@@ -23,7 +24,11 @@ public class Coordinates {
     private Double longitude;
     private Double latitude;
 
+    @JsonbDateFormat("dd/MM/yyyy")
+    private Date date;
+
     @JsonbTransient
+    @JoinColumn
     @ManyToOne
     @JoinTable(name = "GPXDATA_COORDINATES_LINK")
     GpxData gpxData;
@@ -31,7 +36,19 @@ public class Coordinates {
     public Coordinates() {
     }
 
+    public Coordinates(Double longitude, Double latitude, Date date) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.date = date;
+    }
+
     public Coordinates(Double longitude, Double latitude) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    public Coordinates(Long id, Double longitude, Double latitude) {
+        this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -56,6 +73,18 @@ public class Coordinates {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public GpxData getGpxData() {
