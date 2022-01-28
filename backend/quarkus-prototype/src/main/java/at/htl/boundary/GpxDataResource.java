@@ -27,9 +27,15 @@ public class GpxDataResource {
     }
 
     @GET
-    @Path("{id}")
-    public Response getCoordinatesListWithRouteId(@PathParam("id") Long i) {
-        return Response.ok(gpxDataRepository.getCoordinateList(i)).build();
+    @Path("/id/{id}")
+    public Response getCoordinatesListById(@PathParam("id") Long i) {
+        return Response.ok(gpxDataRepository.getCoordinateListById(i)).build();
+    }
+
+    @GET
+    @Path("/name/{name}")
+    public Response getCoordinatesListByName(@PathParam("name") String name) {
+        return Response.ok(gpxDataRepository.getCoordinateListByName(name)).build();
     }
 
     @GET

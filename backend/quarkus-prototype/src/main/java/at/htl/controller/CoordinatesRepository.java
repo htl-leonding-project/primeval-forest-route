@@ -29,12 +29,13 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
 
             GpxData gpxData1 = getGpxDataByName(gpxData.getName());
 
-            coordinates.setGpxDataId(gpxData1);
+            coordinates.setGpxData(gpxData1);
 
             persist(coordinates);
         }
     }
 
+    @Transactional
     private GpxData getGpxDataByName(String name) {
         TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
                 .setParameter("NAME", name);
@@ -42,6 +43,7 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
         return query.getSingleResult();
     }
 
+    @Transactional
     private Coordinates getCoordinatesByCoords(Double longitude, Double latitude) {
         TypedQuery<Coordinates> query = em.createNamedQuery("Coordinates.getByCoordinates", Coordinates.class)
                 .setParameter("LONG", longitude)
@@ -58,7 +60,10 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
     }
 
     @Transactional
-    public List<Coordinates> persistCoordinates(int size, GPX gpx, List<Coordinates> coordinatesList) {
+    public List<Coordinates> persistCoordinates(GPX gpx, List<Coordinates> coordinatesList, GpxData gpxData) {
+        int size;
+
+        size = gpx.getTracks().get(0).getSegments().get(0).getPoints().size();
 
         for (int i = 0; i < size; i++) {
             Coordinates coordinates = new Coordinates();
@@ -67,6 +72,7 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
             double latitude = Double.parseDouble(gpx.getTracks().get(0).getSegments().get(0).getPoints().get(i).getLatitude().toString());
             coordinates.setLongitude(longitude);
             coordinates.setLatitude(latitude);
+            coordinates.setGpxData(gpxData);
 
             persist(coordinates);
 

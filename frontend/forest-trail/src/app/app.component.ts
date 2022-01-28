@@ -34,7 +34,7 @@ export class AppComponent implements OnInit{
     this.getGpxData();
     //this.getControlPoints();
 
-    console.log(this.coordinates);
+    console.log(this.controlpoints);
     console.log(this.coordinates);
     console.log(this.routes);
     console.log(this.coordinat);
