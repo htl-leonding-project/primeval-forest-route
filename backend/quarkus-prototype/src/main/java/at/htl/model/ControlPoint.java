@@ -10,7 +10,8 @@ import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
-public class ControlPoint extends PanacheEntityBase {
+@Table(name = "POINTS")
+public class ControlPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,18 +21,19 @@ public class ControlPoint extends PanacheEntityBase {
     private Double latitudeCoordinate;
     private Double longitudeCoordinate;
 
+    @JsonbTransient
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    private Route route;
+    @JoinTable(name = "GPXDATA_POINTS_LINK")
+    GpxData gpxData;
 
     public ControlPoint() {
     }
 
-    public ControlPoint(String name, Double latitudeCoordinate, Double longitudeCoordinate, Route route) {
+    public ControlPoint(String name, Double latitudeCoordinate, Double longitudeCoordinate, GpxData gpxData) {
         this.name = name;
         this.latitudeCoordinate = latitudeCoordinate;
         this.longitudeCoordinate = longitudeCoordinate;
-        this.route = route;
+        this.gpxData = gpxData;
     }
 
     public Long getId() {
@@ -66,12 +68,12 @@ public class ControlPoint extends PanacheEntityBase {
         this.longitudeCoordinate = longitudeCoordinate;
     }
 
-    public Route getRoute() {
-        return route;
+    public GpxData getGpxData() {
+        return gpxData;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setGpxData(GpxData gpxData) {
+        this.gpxData = gpxData;
     }
 
     @Override

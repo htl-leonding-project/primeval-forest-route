@@ -30,17 +30,10 @@ public class ControlPointResource {
         return Response.ok(controlPointRepository.getAllControlpoints()).build();
     }
 
-    @GET
-    @Path("{routeId}")
-    public Response getCoordinatesByRouteId(@PathParam("routeId") Long id) {
-        return Response.ok(controlPointRepository.getControlPointByRouteId(id)).build();
-    }
-
     @POST
     @Path("addControlPoint")
     public Response addControlPoint(ControlPoint controlPoint) {
         this.controlPoints.add(controlPoint);
         return Response.ok(controlPoint).build();
     }
-
 }

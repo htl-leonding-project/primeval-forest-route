@@ -28,7 +28,6 @@ public class Coordinates {
     private Date date;
 
     @JsonbTransient
-    @JoinColumn
     @ManyToOne
     @JoinTable(name = "GPXDATA_COORDINATES_LINK")
     GpxData gpxData;

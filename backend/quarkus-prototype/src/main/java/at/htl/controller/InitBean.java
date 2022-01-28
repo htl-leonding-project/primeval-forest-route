@@ -26,6 +26,5 @@ public class InitBean {
             e.printStackTrace();
         }
         routeRepository.persistRoute();
-        controlPointRepository.persistControlPoints();
     }
 }

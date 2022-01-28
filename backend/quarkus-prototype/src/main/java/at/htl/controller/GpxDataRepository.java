@@ -1,5 +1,6 @@
 package at.htl.controller;
 
+import at.htl.model.ControlPoint;
 import at.htl.model.Coordinates;
 import at.htl.model.GpxData;
 import io.jenetics.jpx.GPX;
@@ -22,6 +23,9 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     CoordinatesRepository coordinatesRepository;
 
     @Inject
+    ControlPointRepository controlPointRepository;
+
+    @Inject
     EntityManager em;
 
     public static String[] allPaths = getAllPathsOfRoutes();
@@ -34,7 +38,10 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
             List<Coordinates> coords = persistCoordinates(allPath, gpxData);
             gpxData.setRoutePoints(coords);
-            //System.out.println(coords.get(1));
+            em.merge(gpxData);
+
+            List<ControlPoint> points = controlPointRepository.persistControlPoints(gpxData);
+            gpxData.setControlPoints(points);
             em.merge(gpxData);
         }
     }
@@ -53,6 +60,14 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
                 .setParameter("NAME", name);
         GpxData gpxData = query.getSingleResult();
         return gpxData.getRoutePoints();
+    }
+
+    @Transactional
+    public List<ControlPoint> getControlPointListByName(String name) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
+                .setParameter("NAME", name);
+        GpxData gpxData = query.getSingleResult();
+        return gpxData.getControlPoints();
     }
 
     @Transactional

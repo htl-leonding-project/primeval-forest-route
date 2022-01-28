@@ -1,10 +1,8 @@
 package at.htl.controller;
 
-import at.htl.model.ControlPoint;
+import at.htl.model.*;
 
 import at.htl.model.ControlPoint;
-import at.htl.model.Coordinates;
-import at.htl.model.Route;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,23 +31,23 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
         }
     }
 
-    @Transactional
-    public List<ControlPoint> getControlPointByRouteId(Long id) {
-        List<ControlPoint> controlPoints = getAllControlpoints();
-        List<ControlPoint> specificControlPoints = new ArrayList<>();
-
-        for (ControlPoint controlPoint : controlPoints) {
-            System.out.println(controlPoint);
-        }
-
-        for (int i = 0; i < controlPoints.toArray().length; i++) {
-            if(Objects.equals(controlPoints.get(i).getRoute().getId(), id)) {
-                specificControlPoints.add(controlPoints.get(i));
-            }
-        }
-
-        return specificControlPoints;
-    }
+//    @Transactional
+//    public List<ControlPoint> getControlPointByRouteId(Long id) {
+//        List<ControlPoint> controlPoints = getAllControlpoints();
+//        List<ControlPoint> specificControlPoints = new ArrayList<>();
+//
+//        for (ControlPoint controlPoint : controlPoints) {
+//            System.out.println(controlPoint);
+//        }
+//
+//        for (int i = 0; i < controlPoints.toArray().length; i++) {
+//            if(Objects.equals(controlPoints.get(i).getRoute().getId(), id)) {
+//                specificControlPoints.add(controlPoints.get(i));
+//            }
+//        }
+//
+//        return specificControlPoints;
+//    }
 
     @Transactional
     public List<ControlPoint> getAllControlpoints() {
@@ -59,28 +57,35 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
     }
 
     @Transactional
-    public void persistControlPoints() {
-        List<ControlPoint> controlPoints = generateControlPoints();
+    public List<ControlPoint> persistControlPoints(GpxData gpxData) {
+        List<ControlPoint> controlPoints = generateControlPoints(gpxData);
         //System.out.println(controlPoints);
         for (ControlPoint controlPoint : controlPoints) {
             persist(controlPoint);
         }
+
+        return controlPoints;
     }
 
-    public List<ControlPoint> generateControlPoints() {
+    public List<ControlPoint> generateControlPoints(GpxData gpxData) {
         List<String[]> fileData = readDataFromFile(controlPointsFile);
         List<ControlPoint> controlPoints = new ArrayList<>();
         RouteRepository rp = new RouteRepository();
+        int abschnitt;
 
         for (String[] controlPointString : fileData) {
-            ControlPoint controlPoint = new ControlPoint();
+            abschnitt = Integer.parseInt(controlPointString[4]);
 
-            controlPoint.setName(controlPointString[1]);
-            controlPoint.setLatitudeCoordinate(Double.parseDouble(controlPointString[2].replaceAll("\\s", "")));
-            controlPoint.setLongitudeCoordinate(Double.parseDouble(controlPointString[3].replaceAll("\\s", "")));
-            controlPoint.setRoute(rp.findByCsvId(Long.parseLong(controlPointString[4])));
+            if(abschnitt == gpxData.getId()) {
+                ControlPoint controlPoint = new ControlPoint();
 
-            controlPoints.add(controlPoint);
+                controlPoint.setName(controlPointString[1]);
+                controlPoint.setLatitudeCoordinate(Double.parseDouble(controlPointString[2].replaceAll("\\s", "")));
+                controlPoint.setLongitudeCoordinate(Double.parseDouble(controlPointString[3].replaceAll("\\s", "")));
+                controlPoint.setGpxData(gpxData);
+
+                controlPoints.add(controlPoint);
+            }
         }
         return controlPoints;
     }
