@@ -34,14 +34,23 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
             List<Coordinates> coords = persistCoordinates(allPath, gpxData);
             gpxData.setRoutePoints(coords);
-
+            //System.out.println(coords.get(1));
             em.merge(gpxData);
         }
     }
 
     @Transactional
-    public List<Coordinates> getCoordinateList(Long i) {
-        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findById", GpxData.class).setParameter("INT", i);
+    public List<Coordinates> getCoordinateListById(Long i) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findById", GpxData.class)
+                .setParameter("INT", i);
+        GpxData gpxData = query.getSingleResult();
+        return gpxData.getRoutePoints();
+    }
+
+    @Transactional
+    public List<Coordinates> getCoordinateListByName(String name) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
+                .setParameter("NAME", name);
         GpxData gpxData = query.getSingleResult();
         return gpxData.getRoutePoints();
     }

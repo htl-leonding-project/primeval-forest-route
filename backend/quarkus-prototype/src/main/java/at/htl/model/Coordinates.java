@@ -23,6 +23,7 @@ public class Coordinates {
     private Double longitude;
     private Double latitude;
 
+    @JsonbTransient
     @ManyToOne
     @JoinTable(name = "GPXDATA_COORDINATES_LINK")
     GpxData gpxData;
