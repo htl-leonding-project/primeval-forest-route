@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class PictureRepository implements PanacheRepository<Picture> {
         return em.merge(picture);
     }
 
-    public InputStream getPictureById(Long id) {
+    /*public InputStream getPictureById(Long id) {
         try {
             Picture picture = findById(id);
             String fileUrl = String.format("%s/%s",
@@ -56,7 +55,7 @@ public class PictureRepository implements PanacheRepository<Picture> {
             logger.log(Level.INFO, e.getMessage());
             return null;
         }
-    }
+    }*/
 
     @Transactional
     public Picture uploadImage(ImageMultipartBody imageMultipartBody) {
@@ -78,13 +77,9 @@ public class PictureRepository implements PanacheRepository<Picture> {
         try(var os = new FileOutputStream(path)) {
             file.transferTo(os);
             Coordinates coordinates = imageDataExtractor.getCoordinates(path);
-            System.out.println(coordinates.toString());
             picture.setCoordinates(coordinates);
 
-            // TODO: if statement ignored for test purpose
-            //if (minDistance <= 200 && minDistance != -1 && index != -1) {
             picture.setControlPoint(this.getClosestControlPoint(coordinates));
-            //}
 
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
@@ -93,14 +88,32 @@ public class PictureRepository implements PanacheRepository<Picture> {
         return this.save(picture);
     }
 
+    public File getPictureById(Long id) {
+        Picture picture = findById(id);
+
+        return new File(
+                picture.getImageUrl()
+        );
+        /*try (FileInputStream is = new FileInputStream()) {
+            is.
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
     public ControlPoint getClosestControlPoint(Coordinates pictureCoordinates) {
+
         int minDistance = -1;
         int distance;
         int index = -1;
+
         List<ControlPoint> controlPoints = controlPointRepository
                 .findAll()
                 .stream()
                 .collect(Collectors.toList());
+
         List<Coordinates> cpCoordinates = controlPoints
                 .stream()
                 .map(c ->
@@ -126,7 +139,11 @@ public class PictureRepository implements PanacheRepository<Picture> {
             }
         }
         System.out.println(minDistance);
+        // TODO: if statement ignored for test purpose
+        //if (minDistance <= 200 && minDistance != -1 && index != -1) {
         return controlPoints.get(index);
+        //}
+        // return null;
     }
 
     public int getDistanceBetweenTwoCoordinates(Coordinates pictureCoordinate, Coordinates controlPointCoordinate) {
