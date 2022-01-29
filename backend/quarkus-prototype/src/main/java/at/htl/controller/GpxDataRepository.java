@@ -55,6 +55,14 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     }
 
     @Transactional
+    public List<ControlPoint> getControlPointListById(Long i) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findById", GpxData.class)
+                .setParameter("INT", i);
+        GpxData gpxData = query.getSingleResult();
+        return gpxData.getControlPoints();
+    }
+
+    @Transactional
     public List<Coordinates> getCoordinateListByName(String name) {
         TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
                 .setParameter("NAME", name);

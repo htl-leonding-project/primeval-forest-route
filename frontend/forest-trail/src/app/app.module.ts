@@ -8,20 +8,25 @@ import { MapComponent } from './map/map.component';
 import { UploadImageComponent } from './upload-image/upload-image.component';
 
 import { MarkerService } from './marker.service';
+import { RouteMenuComponent } from './route-menu/route-menu.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    UploadImageComponent
+    UploadImageComponent,
+    RouteMenuComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    LeafletModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        LeafletModule,
+        FormsModule
+    ],
   providers: [
-    MarkerService
+    RouteMenuComponent,
+    MapComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -39,10 +39,18 @@ public class GpxDataResource {
     }
 
     @GET
+    @Path("/points/{id}")
+    public Response getControlPointsListById(@PathParam("id") Long id) {
+        return Response.ok(gpxDataRepository.getControlPointListById(id)).build();
+    }
+
+    @GET
     @Path("/points/{name}")
     public Response getControlPointsListByName(@PathParam("name") String name) {
         return Response.ok(gpxDataRepository.getControlPointListByName(name)).build();
     }
+
+
 
     @GET
     public Response getAllGpxData() {

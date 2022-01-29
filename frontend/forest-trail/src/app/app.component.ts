@@ -29,15 +29,15 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.getRoutes();
-    this.getCoordinates();
-    this.getGpxData();
+    //this.getRoutes();
+    //this.getCoordinates();
+    //this.getGpxData();
     //this.getControlPoints();
 
-    console.log(this.controlpoints);
-    console.log(this.coordinates);
-    console.log(this.routes);
-    console.log(this.coordinat);
+    // console.log(this.controlpoints);
+    // console.log(this.coordinates);
+    // console.log(this.routes);
+    // console.log(this.coordinat);
   }
 
   // getControlPoints() {
@@ -89,8 +89,8 @@ export class AppComponent implements OnInit{
             })
           }
         }
-        console.log(this.coordinates[0].longitude);
-        console.log(this.coordinates[0].latitude);
+        //console.log(this.coordinates[0].longitude);
+        //console.log(this.coordinates[0].latitude);
       })
   }
 
@@ -104,7 +104,6 @@ export class AppComponent implements OnInit{
             this.coordinat.push({
               id: gpxElement["id"],
               name: gpxElement["name"],
-              coords: gpxElement["coords"]
             })
           }
         }

@@ -1,6 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../marker.service';
+import {GpxdataDto} from "../gpxdata-dto";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -25,11 +26,12 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit {
 
   private map: any;
+  private check: Boolean = false;
 
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 54.32832, 13.462928 ],
-      zoom: 9
+      zoom: 7.5
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -39,13 +41,19 @@ export class MapComponent implements AfterViewInit {
     });
 
     tiles.addTo(this.map);
+    this.check = true;
   }
 
   constructor(private markerService: MarkerService) { }
 
   ngAfterViewInit(): void {
-    this.initMap();
-    this.markerService.makeControlpointMarker(this.map);
+
   }
 
+  changeMapView(id: GpxdataDto): void {
+    if(!this.check) {
+      this.initMap();
+    }
+    this.markerService.makeControlpointMarker(this.map, id);
+  }
 }
