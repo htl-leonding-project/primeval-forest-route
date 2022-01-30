@@ -47,13 +47,11 @@ export class MapComponent implements AfterViewInit {
   constructor(private markerService: MarkerService) { }
 
   ngAfterViewInit(): void {
-
+    this.initMap();
+    this.markerService.makeControlpointMarker(this.map, 0)
   }
 
   changeMapView(id: GpxdataDto): void {
-    if(!this.check) {
-      this.initMap();
-    }
-    this.markerService.makeControlpointMarker(this.map, id);
+    this.markerService.makeControlpointMarker(this.map, id.id);
   }
 }
