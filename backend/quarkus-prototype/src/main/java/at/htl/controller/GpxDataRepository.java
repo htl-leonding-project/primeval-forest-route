@@ -122,6 +122,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     private static String[] getAllPathsOfRoutes() {
         return new String[]{"../src/main/resources/route/route1.gpx",
                 "../src/main/resources/route/route2.gpx",
-                "../src/main/resources/route/route3.gpx"};
+                "../src/main/resources/route/route3.gpx",
+                "../src/main/resources/route/route4.gpx"};
     }
 }

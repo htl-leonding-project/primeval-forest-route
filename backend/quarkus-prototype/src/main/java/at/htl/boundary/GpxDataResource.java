@@ -45,12 +45,10 @@ public class GpxDataResource {
     }
 
     @GET
-    @Path("/points/{name}")
+    @Path("/points/name/{name}")
     public Response getControlPointsListByName(@PathParam("name") String name) {
         return Response.ok(gpxDataRepository.getControlPointListByName(name)).build();
     }
-
-
 
     @GET
     public Response getAllGpxData() {

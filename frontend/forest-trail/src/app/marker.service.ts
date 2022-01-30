@@ -14,30 +14,36 @@ import {marker} from "leaflet";
 })
 export class MarkerService {
 
+  private map: any;
   markers: any = [];
   prevPoly: any = [];
   jsonArray: [] = [];
   controlpoints: ControlPointDto[] = [];
   coordinates: CoordinatesDto[] = [];
+  allCpoints: ControlPointDto[] = [];
+  allCoords: CoordinatesDto[] = [];
   // @Input()
   // gpxdata: number = 0;
   private check: boolean = false;
 
   constructor(public quarkusService: QuarkusBackendService) { }
 
-  public makeControlpointMarker(map: L.Map, gpxData: GpxdataDto) {
-    var id = gpxData.id;
+  public makeControlpointMarker(map: L.Map, id: number | null | undefined) {
     var cp: ControlPointDto[] = [];
     var mk: any = [];
     var co: CoordinatesDto[] = [];
     var py: any = [];
 
-    if(gpxData.id != 0 || null || undefined) {
+    if(id != 0 || null || undefined) {
       if(this.check) {
-        this.clearMap(map)
+        this.clearMap(this.map)
       }
-      this.getCoordinatesById(map, id, co, py)
-      this.getControlPointsById(map, id, cp, mk)
+      this.getCoordinatesById(this.map, id, co, py)
+      this.getControlPointsById(this.map, id, cp, mk)
+    } else {
+      this.map = map;
+      this.getAllControlPoints(this.map, mk)
+      this.getAllCoordinates(this.map, py)
     }
     this.check = true
   }
@@ -71,6 +77,32 @@ export class MarkerService {
         for (let i = 0; i < this.controlpoints.length; i++) {
           const lat = this.controlpoints[i].latitude;
           const lon = this.controlpoints[i].longitude;
+
+          // @ts-ignore
+          const marker = L.marker([lat, lon]).addTo(map);
+          mk.push(marker)
+        }
+
+        this.markers = mk;
+      })
+  }
+
+  getAllControlPoints(map: L.Map, mk: any) {
+    this.quarkusService.getAllControlPoints()
+      .subscribe(r => {
+        if (r != null) {
+          //console.log(JSON.stringify(r));
+          this.jsonArray = JSON.parse(JSON.stringify(r));
+          for (const cpElement of this.jsonArray) {
+            this.allCpoints.push({
+              latitude: cpElement["latitudeCoordinate"],
+              longitude: cpElement["longitudeCoordinate"]
+            })
+          }
+        }
+        for (let i = 0; i < this.allCpoints.length; i++) {
+          const lat = this.allCpoints[i].latitude;
+          const lon = this.allCpoints[i].longitude;
 
           // @ts-ignore
           const marker = L.marker([lat, lon]).addTo(map);
@@ -117,16 +149,51 @@ export class MarkerService {
         py.push(poly);
         this.prevPoly = py;
 
-        if(id == 1) {
-          const lat = 54.367342;
-          const lon = 13.5652;
-          map.flyTo([lat, lon], 7.5)
-        } else {
-          const lat = this.coordinates[this.coordinates.length/2].latitude;
-          const lon = this.coordinates[this.coordinates.length/2].longitude;
-          // @ts-ignore
-          map.flyTo([lat, lon], 7.5)
+        var center: number = Math.round(co.length/2);
+        const lat = co[center].latitude;
+        const lon = co[center].longitude;
+        // @ts-ignore
+        map.flyTo([lat, lon], 7.5)
+      })
+  }
+
+  getAllCoordinates(map: L.Map,
+                     py: any) {
+    this.quarkusService.getAllCoordinates()
+      .subscribe(c => {
+        if (c != null) {
+          //console.log(JSON.stringify(c));
+          this.jsonArray = JSON.parse(JSON.stringify(c));
+          for (const coElement of this.jsonArray) {
+            this.allCoords.push({
+              latitude: coElement["latitude"],
+              longitude: coElement["longitude"]
+            })
+          }
         }
+        var array: L.LatLngExpression[] | L.LatLngExpression[][] =  [];
+        this.allCoords.forEach(item => {
+          if (item.latitude != null) {
+            if (item.longitude != null) {
+              // @ts-ignore
+              array.push(new L.LatLng(item.latitude, item.longitude));
+            }
+          }
+        });
+        var poly = L.polyline(array, {
+          color: 'purple',
+          weight: 5,
+          opacity: 1,
+          smoothFactor: 1
+        }).addTo(map);
+        py.push(poly);
+        this.prevPoly = py;
+
+        var center: number = Math.round(this.allCoords.length/2);
+        const lat = this.allCoords[center].latitude;
+        const lon = this.allCoords[center].longitude;
+        // @ts-ignore
+        map.flyTo([lat, lon], 6.2)
       })
   }
 }
