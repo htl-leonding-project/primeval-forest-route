@@ -1,8 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';
+import {Component, AfterViewInit, Input} from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../marker.service';
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ControlPointDto} from "../controlpoint-dto";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
+const greenImgMarker = 'assets/green-marker.png';
 const iconUrl = 'assets/marker-icon.png';
 const shadowUrl = 'assets/marker-shadow.png';
 const iconDefault = L.icon({
@@ -26,6 +29,15 @@ export class MapComponent implements AfterViewInit {
 
   private map: any;
 
+  @Input()
+  cpFromImg: ControlPointDto = {}
+
+  @Input()
+  blob: any;
+
+  constructor(private markerService: MarkerService,
+              private readonly sanitizer: DomSanitizer) {}
+
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 54.32832, 13.462928 ],
@@ -38,10 +50,49 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
+
     tiles.addTo(this.map);
   }
 
-  constructor(private markerService: MarkerService) { }
+  updateMap() {
+    console.log(this.cpFromImg);
+    var url: SafeUrl = "";
+    // if (this.cpFromImg.latitude != null && this.cpFromImg.longitude != null) {
+
+      // L.marker([ this.cpFromImg.latitude!, this.cpFromImg.longitude! ]).remove();
+    this.displayImage().then(
+      value => {
+        console.log(value);
+        url = value
+      }
+    );
+    console.log(url);
+
+    console.log(this.cpFromImg);
+    console.log(this.cpFromImg.latitude);
+    L.marker([ this.cpFromImg.latitude!, this.cpFromImg.longitude! ], {
+        icon: L.icon({
+          iconSize: [ 25, 41 ],
+          iconAnchor: [ 13, 41 ],
+          iconUrl: greenImgMarker,
+          shadowUrl: shadowUrl
+        })
+      })
+      .addTo(this.map)
+      .bindPopup(`
+            <img src="${url}" alt="img" style="width: 5%">
+        `)
+      .openPopup();
+
+    //} else {
+     // console.log("Did not find coordinates of CP");
+    //}
+  }
+
+  async displayImage(): Promise<SafeUrl> {
+    let objectURL = URL.createObjectURL(this.blob);
+    return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+  }
 
   ngAfterViewInit(): void {
     this.initMap();

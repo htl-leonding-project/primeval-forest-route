@@ -49,6 +49,10 @@ export class QuarkusBackendService {
     });
   }
 
+  getCpWithImageId(id: number): Observable<ControlPointDto> {
+    return this.http.get<ControlPointDto>(`${this.baseUrl}/picture/getCpByImageId/${id}`);
+  }
+
   getAllGpxData(): Observable<GpxdataDto[]> {
     return this.http.get<GpxdataDto[]>(
       `${this.baseUrl}/gpx/all`

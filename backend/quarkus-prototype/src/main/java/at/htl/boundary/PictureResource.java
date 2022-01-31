@@ -32,6 +32,12 @@ public class PictureResource {
         return Response.ok(file).build();
     }
 
+    @GET
+    @Path("getCpByImageId/{id}")
+    public Response getCpByImageId(@PathParam("id") Long id) {
+        return Response.ok(repo.getCpByImageId(id)).build();
+    }
+
     @POST
     @Transactional
     @Path("uploadPicture")

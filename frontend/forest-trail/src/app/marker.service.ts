@@ -15,16 +15,13 @@ export class MarkerService {
   controlpoints: ControlPointDto[] = [];
   coordinates: CoordinatesDto[] = [];
 
+
   constructor(public quarkusService: QuarkusBackendService,
               private http: HttpClient) { }
 
   public makeControlpointMarker(map: L.Map) {
-
-    // this.getControlPoints(map);
     this.getCoordinates(map)
     this.getControlPoints(map)
-
-
   }
 
   getControlPoints(map: L.Map) {
@@ -36,23 +33,26 @@ export class MarkerService {
           for (const cpElement of this.jsonArray) {
             this.controlpoints.push({
               id: cpElement["id"],
-              latitude: cpElement["latitudeCoordinate"],
-              longitude: cpElement["longitudeCoordinate"],
+              latitude: cpElement["latitude"],
+              longitude: cpElement["longitude"],
               name: cpElement["name"]
             })
           }
         }
         for (let i = 0; i < this.controlpoints.length; i++) {
-          const lat = this.controlpoints[i].latitude;
-          const lon = this.controlpoints[i].longitude;
+          const lat = this.controlpoints[i].latitude!;
+          const lon = this.controlpoints[i].longitude!;
 
-          // @ts-ignore
           const marker = L.marker([lat, lon]);
 
           marker.addTo(map);
         }
       })
   }
+
+  // getControlpoint(id: number): ControlPointDto {
+  //
+  // }
 
   getCoordinates(map: L.Map) {
     this.quarkusService.getAllCoordinates()
@@ -69,11 +69,9 @@ export class MarkerService {
         }
         var array: L.LatLngExpression[] | L.LatLngExpression[][] =  [];
         this.coordinates.forEach(item => {
-          if (item.latitude != null) {
-            if (item.longitude != null) {
-              // @ts-ignore
-              array.push(new L.LatLng(item.latitude, item.longitude));
-            }
+          if (item.latitude != null && item.longitude != null) {
+            // @ts-ignore
+            array.push(new L.LatLng(item.latitude, item.longitude));
           }
         });
         var poly = L.polyline(array, {

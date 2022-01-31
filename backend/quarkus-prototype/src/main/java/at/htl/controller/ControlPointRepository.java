@@ -2,24 +2,16 @@ package at.htl.controller;
 
 import at.htl.model.ControlPoint;
 
-import at.htl.model.ControlPoint;
-import at.htl.model.Coordinates;
-import at.htl.model.Route;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 import java.io.*;
-import java.lang.reflect.Array;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ApplicationScoped
 public class ControlPointRepository implements PanacheRepository<ControlPoint> {
@@ -76,8 +68,8 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
             ControlPoint controlPoint = new ControlPoint();
 
             controlPoint.setName(controlPointString[1]);
-            controlPoint.setLatitudeCoordinate(Double.parseDouble(controlPointString[2].replaceAll("\\s", "")));
-            controlPoint.setLongitudeCoordinate(Double.parseDouble(controlPointString[3].replaceAll("\\s", "")));
+            controlPoint.setLatitude(Double.parseDouble(controlPointString[2].replaceAll("\\s", "")));
+            controlPoint.setLongitude(Double.parseDouble(controlPointString[3].replaceAll("\\s", "")));
             controlPoint.setRoute(rp.findByCsvId(Long.parseLong(controlPointString[4])));
 
             controlPoints.add(controlPoint);

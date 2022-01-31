@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {QuarkusBackendService} from "./quarkus-backend.service";
 import {RouteDto} from "./route-dto";
 import {HttpClient} from "@angular/common/http";

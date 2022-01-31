@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
 import {PictureDto} from "../picture-dto";
-import {Observable} from "rxjs";
+import {ControlPointDto} from "../controlpoint-dto";
 
 @Component({
   selector: 'app-upload-image',
@@ -20,9 +20,11 @@ export class UploadImageComponent {
   @Output()
   img: EventEmitter<any> = new EventEmitter<any>();
 
-  images: PictureDto[] = [];
+  @Output()
+  cp: ControlPointDto = {}
 
-  constructor(private service: QuarkusBackendService) {  }
+  constructor(private service: QuarkusBackendService) {
+  }
 
   processFile(imageInput: any) {
     const file: File = imageInput.files[0];
@@ -48,12 +50,22 @@ export class UploadImageComponent {
             f => {
               console.log(f)
               this.file = f
+              this.getCpId().then(value => {
+                console.log(value);
+                this.cp = value
+              })
             }
           )
         }
         console.log(this.sentImg);
       })
     }
+  }
+  async getCpId(): Promise<ControlPointDto> {
+    if (this.sentImg.id != null) {
+      return await this.service.getCpWithImageId(this.sentImg.id).toPromise();
+    }
+    return Promise.reject("no controlpoint to this image found");
   }
 }
 
