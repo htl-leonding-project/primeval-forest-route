@@ -26,9 +26,10 @@ public class PictureResource {
 
     @GET
     @Path("getImageById/{id}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getImageById(@PathParam("id") Long id) {
-        return Response.ok(repo.getPictureById(id)).build();
+        File file = repo.getPictureById(id);
+        System.out.println(file);
+        return Response.ok(file).build();
     }
 
     @POST

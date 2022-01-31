@@ -43,7 +43,10 @@ export class QuarkusBackendService {
   }
 
   getImage(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/picture/getImageById/${id}`);
+    console.log(id);
+    return this.http.get(`${this.baseUrl}/picture/getImageById/${id}`, {
+      responseType: 'blob'
+    });
   }
 
   getAllGpxData(): Observable<GpxdataDto[]> {

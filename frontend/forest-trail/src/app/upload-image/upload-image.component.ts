@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
 import {PictureDto} from "../picture-dto";
 import {Observable} from "rxjs";
@@ -13,7 +13,13 @@ export class UploadImageComponent {
   selectedFile?: ImageSnippet;
   message = '';
   fileValid: boolean = false;
+
   sentImg: PictureDto = {};
+  file: any;
+
+  @Output()
+  img: EventEmitter<any> = new EventEmitter<any>();
+
   images: PictureDto[] = [];
 
   constructor(private service: QuarkusBackendService) {  }
@@ -37,11 +43,18 @@ export class UploadImageComponent {
           id: res['id'],
           fileName: res['fileName']
         }
+        if (this.sentImg.id != null) {
+          this.service.getImage(this.sentImg.id).subscribe(
+            f => {
+              console.log(f)
+              this.file = f
+            }
+          )
+        }
         console.log(this.sentImg);
       })
     }
   }
-
 }
 
 class ImageSnippet {
