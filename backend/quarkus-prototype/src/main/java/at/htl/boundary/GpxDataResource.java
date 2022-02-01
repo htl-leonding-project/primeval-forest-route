@@ -33,9 +33,21 @@ public class GpxDataResource {
     }
 
     @GET
-    @Path("/name/{name}")
+    @Path("/coords/{name}")
     public Response getCoordinatesListByName(@PathParam("name") String name) {
         return Response.ok(gpxDataRepository.getCoordinateListByName(name)).build();
+    }
+
+    @GET
+    @Path("/points/{id}")
+    public Response getControlPointsListById(@PathParam("id") Long id) {
+        return Response.ok(gpxDataRepository.getControlPointListById(id)).build();
+    }
+
+    @GET
+    @Path("/points/name/{name}")
+    public Response getControlPointsListByName(@PathParam("name") String name) {
+        return Response.ok(gpxDataRepository.getControlPointListByName(name)).build();
     }
 
     @GET

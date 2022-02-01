@@ -1,5 +1,8 @@
 package at.htl.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,12 @@ public class GpxData {
     private String name;
 
     @OneToMany(mappedBy = "gpxData", fetch = FetchType.EAGER, cascade={CascadeType.PERSIST,  CascadeType.REMOVE})
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Coordinates> routePoints = new ArrayList<>();
+
+    @OneToMany(mappedBy = "gpxData", fetch = FetchType.EAGER, cascade={CascadeType.PERSIST,  CascadeType.REMOVE})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<ControlPoint> controlPoints = new ArrayList<>();
 
     public GpxData() {
     }
@@ -69,6 +77,14 @@ public class GpxData {
 
     public void setRoutePoints(List<Coordinates> routePoints) {
         this.routePoints = routePoints;
+    }
+
+    public List<ControlPoint> getControlPoints() {
+        return controlPoints;
+    }
+
+    public void setControlPoints(List<ControlPoint> controlPoints) {
+        this.controlPoints = controlPoints;
     }
 
     @Override

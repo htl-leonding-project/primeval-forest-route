@@ -64,4 +64,16 @@ export class QuarkusBackendService {
       `${this.baseUrl}/controlPoint/all`
     )
   }
+
+  getControlPointsById(id: number | null | undefined): Observable<ControlPointDto[]> {
+    return this.http.get<ControlPointDto[]>(
+      `${this.baseUrl}/gpx/points/${id}`
+    )
+  }
+
+  getCoordinatesById(id: number | null | undefined): Observable<CoordinatesDto[]> {
+    return this.http.get<CoordinatesDto[]>(
+      `${this.baseUrl}/gpx/id/${id}`
+    )
+  }
 }

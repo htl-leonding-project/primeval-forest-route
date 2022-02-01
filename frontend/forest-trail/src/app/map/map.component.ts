@@ -1,8 +1,7 @@
-import {Component, AfterViewInit, Input} from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../marker.service';
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {ControlPointDto} from "../controlpoint-dto";
+import {GpxdataDto} from "../gpxdata-dto";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const greenImgMarker = 'assets/green-marker.png';
@@ -28,6 +27,7 @@ L.Marker.prototype.options.icon = iconDefault;
 export class MapComponent implements AfterViewInit {
 
   private map: any;
+  private check: Boolean = false;
 
   @Input()
   cpFromImg: ControlPointDto = {}
@@ -41,7 +41,7 @@ export class MapComponent implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 54.32832, 13.462928 ],
-      zoom: 9
+      zoom: 7.5
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -50,8 +50,8 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
-
     tiles.addTo(this.map);
+    this.check = true;
   }
 
   updateMap() {
@@ -96,7 +96,10 @@ export class MapComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.makeControlpointMarker(this.map);
+    this.markerService.makeControlpointMarker(this.map, 0)
   }
 
+  changeMapView(id: GpxdataDto): void {
+    this.markerService.makeControlpointMarker(this.map, id.id);
+  }
 }
