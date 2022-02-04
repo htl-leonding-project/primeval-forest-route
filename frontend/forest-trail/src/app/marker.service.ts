@@ -55,6 +55,7 @@ export class MarkerService {
     this.prevPoly.forEach(function (item: L.Layer) {
       map.removeLayer(item)
     })
+
   }
 
   getControlPointsById(map: L.Map,
@@ -68,15 +69,16 @@ export class MarkerService {
           this.jsonArray = JSON.parse(JSON.stringify(r));
           for (const cpElement of this.jsonArray) {
             cp.push({
-              latitude: cpElement["latitudeCoordinate"],
-              longitude: cpElement["longitudeCoordinate"]
+              latitudeCoordinate: cpElement["latitudeCoordinate"],
+              longitudeCoordinate: cpElement["longitudeCoordinate"]
             })
           }
         }
         this.controlpoints = cp;
+        console.log(this.controlpoints)
         for (let i = 0; i < this.controlpoints.length; i++) {
-          const lat = this.controlpoints[i].latitude;
-          const lon = this.controlpoints[i].longitude;
+          const lat = this.controlpoints[i].latitudeCoordinate!;
+          const lon = this.controlpoints[i].longitudeCoordinate!;
 
           // @ts-ignore
           const marker = L.marker([lat, lon]).addTo(map);
@@ -87,6 +89,7 @@ export class MarkerService {
       })
   }
 
+
   getAllControlPoints(map: L.Map, mk: any) {
     this.quarkusService.getAllControlPoints()
       .subscribe(r => {
@@ -95,14 +98,15 @@ export class MarkerService {
           this.jsonArray = JSON.parse(JSON.stringify(r));
           for (const cpElement of this.jsonArray) {
             this.allCpoints.push({
-              latitude: cpElement["latitudeCoordinate"],
-              longitude: cpElement["longitudeCoordinate"]
+              latitudeCoordinate: cpElement["latitudeCoordinate"],
+              longitudeCoordinate: cpElement["longitudeCoordinate"]
             })
           }
         }
+        console.log(this.allCpoints)
         for (let i = 0; i < this.allCpoints.length; i++) {
-          const lat = this.allCpoints[i].latitude;
-          const lon = this.allCpoints[i].longitude;
+          const lat = this.allCpoints[i].latitudeCoordinate;
+          const lon = this.allCpoints[i].longitudeCoordinate;
 
           // @ts-ignore
           const marker = L.marker([lat, lon]).addTo(map);
@@ -133,11 +137,9 @@ export class MarkerService {
         var array: L.LatLngExpression[] | L.LatLngExpression[][] =  [];
         this.coordinates = co;
         this.coordinates.forEach(item => {
-          if (item.latitude != null) {
-            if (item.longitude != null) {
-              // @ts-ignore
-              array.push(new L.LatLng(item.latitude, item.longitude));
-            }
+          if (item.latitude != null && item.longitude != null) {
+            // @ts-ignore
+            array.push(new L.LatLng(item.latitude, item.longitude));
           }
         });
         var poly = L.polyline(array, {

@@ -39,23 +39,6 @@ public class PictureRepository implements PanacheRepository<Picture> {
         return em.merge(picture);
     }
 
-    /*public InputStream getPictureById(Long id) {
-        try {
-            Picture picture = findById(id);
-            String fileUrl = String.format("%s/%s",
-                    picture.getImageUrl(), picture.getFileName());
-
-            try (InputStream os = new FileInputStream(fileUrl)) {
-                return os;
-            } catch (FileNotFoundException e) {
-                logger.log(Level.WARNING, e.getMessage());
-                return null;
-            }
-        } catch (Exception e) {
-            logger.log(Level.INFO, e.getMessage());
-            return null;
-        }
-    }*/
 
     @Transactional
     public Picture uploadImage(ImageMultipartBody imageMultipartBody) {
@@ -69,7 +52,7 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
         var path = new File(
                 imagePath,
-                picture.getId() + "_" + picture.getFileName() + "_cp_picture.jpg"
+                picture.getId() + "_" + picture.getFileName()
         );
 
         picture.setImageUrl(path.getPath());
@@ -95,13 +78,6 @@ public class PictureRepository implements PanacheRepository<Picture> {
         return new File(
                 picture.getImageUrl()
         );
-        /*try (FileInputStream is = new FileInputStream()) {
-            is.
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public ControlPoint getClosestControlPoint(Coordinates pictureCoordinates) {
@@ -168,5 +144,9 @@ public class PictureRepository implements PanacheRepository<Picture> {
 
         // calculate the result
         return (int) ((c * r) * 1000);
+    }
+
+    public ControlPoint getCpByImageId(Long id) {
+        return findById(id).getControlPoint();
     }
 }

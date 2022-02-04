@@ -10,13 +10,11 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
 import { MarkerService } from './marker.service';
 import { RouteMenuComponent } from './route-menu/route-menu.component';
 import {FormsModule} from "@angular/forms";
-import {LoadImageComponent} from "./load-image/load-image.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    LoadImageComponent,
     UploadImageComponent,
     RouteMenuComponent
   ],

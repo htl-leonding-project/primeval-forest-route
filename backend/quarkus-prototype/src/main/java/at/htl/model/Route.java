@@ -21,6 +21,7 @@ public class Route extends PanacheEntityBase {
 
     @ManyToOne
     @Cascade(CascadeType.ALL)
+    @JsonbTransient
     private GpxData gpxData;
 
     public Route() {

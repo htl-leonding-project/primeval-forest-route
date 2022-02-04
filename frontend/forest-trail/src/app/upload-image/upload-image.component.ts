@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
 import {PictureDto} from "../picture-dto";
-import {Observable} from "rxjs";
+import {ControlPointDto} from "../controlpoint-dto";
+import {MapComponent} from "../map/map.component";
 
 @Component({
   selector: 'app-upload-image',
@@ -14,17 +15,20 @@ export class UploadImageComponent {
   message = '';
   fileValid: boolean = false;
 
+  @Output()
   sentImg: PictureDto = {};
-  file: any;
+
+  @ViewChild(MapComponent)
+  mapComp!: MapComponent;
 
   @Output()
-  img: EventEmitter<any> = new EventEmitter<any>();
+  cp: ControlPointDto = {}
 
-  images: PictureDto[] = [];
-
-  constructor(private service: QuarkusBackendService) {  }
+  constructor(private service: QuarkusBackendService) {
+  }
 
   processFile(imageInput: any) {
+    this.fileValid = false;
     const file: File = imageInput.files[0];
     const reader = new FileReader();
 
@@ -47,13 +51,22 @@ export class UploadImageComponent {
           this.service.getImage(this.sentImg.id).subscribe(
             f => {
               console.log(f)
-              this.file = f
+              this.getCpId().then(value => {
+                console.log(value);
+                this.cp = value
+              })
             }
           )
         }
         console.log(this.sentImg);
       })
     }
+  }
+  async getCpId(): Promise<ControlPointDto> {
+    if (this.sentImg.id != null) {
+      return await this.service.getCpWithImageId(this.sentImg.id).toPromise();
+    }
+    return Promise.reject("no controlpoint to this image found");
   }
 }
 

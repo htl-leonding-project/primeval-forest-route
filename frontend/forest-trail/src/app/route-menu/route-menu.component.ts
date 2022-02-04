@@ -49,8 +49,8 @@ export class RouteMenuComponent implements OnInit {
           this.jsonArray = JSON.parse(JSON.stringify(r));
           for (const gpxElement of this.jsonArray) {
             this.controlpoints.push({
-              latitude: gpxElement["latitude"],
-              longitude: gpxElement["longitude"]
+              latitudeCoordinate: gpxElement["latitude"],
+              longitudeCoordinate: gpxElement["longitude"]
             })
           }
         }
