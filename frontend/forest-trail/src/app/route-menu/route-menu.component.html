@@ -1,3 +1,4 @@
+<br>
 <select *ngIf="routes !== null" [(ngModel)]="selectedRoute.id" (change)="changesOfSelection()">
   <option *ngFor="let route of routes"
           [value]="route.id"
