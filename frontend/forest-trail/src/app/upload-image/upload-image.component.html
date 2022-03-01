@@ -1,19 +1,24 @@
-<label class="btn btn-default">
-  <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
-</label>
+<div class="center">
+  <label class="btn btn-default">
+    <input #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+  </label>
 
-<button
-  class="btn btn-success"
-  [disabled]="this.fileValid == false"
-  (click)="uploadFile()"
->
-  Upload
-</button>
+  <button
+    class="btn btn-success"
+    [disabled]="this.fileValid == false"
+    (click)="uploadFile()">
+    Upload
+  </button>
+</div>
+
 
 <div class="alert alert-light" role="alert">{{ message }}</div>
 
-<div *ngIf="sentImg.fileName != null" style="padding: 10px;">
+<div *ngIf="sentImg.fileName != null">
   <p>File was uploaded: {{sentImg.fileName}}</p>
 </div>
 
-<app-map [img]="sentImg" [cpFromImg]="cp"></app-map>
+<div style="position: absolute; z-index: -100;">
+  <app-map [img]="sentImg" [cpFromImg]="cp"></app-map>
+</div>
+

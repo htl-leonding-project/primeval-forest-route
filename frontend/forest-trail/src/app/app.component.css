@@ -1,23 +1,19 @@
-body {
-  margin: auto;
-  padding: 0;
+.route_menu_container {
+  width: 60%;
+  margin: 0 auto;
+  min-height: 2vh;
+  margin-top: 10vh;
 }
-
-.map {
-  height: 100%;
-  padding: 0;
+.upload_container {
+  width: 60%;
+  margin: 0 auto;
+  min-height: 2vh;
+  margin-bottom: 10vh;
+  margin-top: 4vh;
 }
-
-
-/*
-.page-container {
-  margin: 0;
-  padding: 0;
+.content {
   width: 100%;
+  min-height: 1vh;
+  margin-bottom: 0;
+  margin-top: 0;
 }
-
-#mountain_pic {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}*/

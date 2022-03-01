@@ -1,0 +1,8 @@
+body {
+  height: 4vh;
+}
+.center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
