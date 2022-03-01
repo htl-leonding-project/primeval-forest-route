@@ -60,6 +60,7 @@ public class PictureRepository implements PanacheRepository<Picture> {
         try(var os = new FileOutputStream(path)) {
             file.transferTo(os);
             Coordinates coordinates = imageDataExtractor.getCoordinates(path);
+            coordinates.setIgnore(true);
             picture.setCoordinates(coordinates);
 
             picture.setControlPoint(this.getClosestControlPoint(coordinates));
@@ -95,8 +96,8 @@ public class PictureRepository implements PanacheRepository<Picture> {
                 .map(c ->
                         new Coordinates(
                                 c.getId(),
-                                c.getLongitude(),
-                                c.getLatitude()
+                                c.getLongitudeCoordinate(),
+                                c.getLatitudeCoordinate()
                         ))
                 .collect(Collectors.toList());
 

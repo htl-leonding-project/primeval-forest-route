@@ -1,34 +1,39 @@
 package at.htl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
-public class ControlPoint extends PanacheEntityBase {
+@Table(name = "POINTS")
+public class ControlPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private Double latitude;
-    private Double longitude;
+    private Double latitudeCoordinate;
+    private Double longitudeCoordinate;
 
+    @JsonbTransient
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    private Route route;
+    @JoinTable(name = "GPXDATA_POINTS_LINK")
+    GpxData gpxData;
 
     public ControlPoint() {
     }
 
-    public ControlPoint(String name, Double latitude, Double longitude, Route route) {
+    public ControlPoint(String name, Double latitudeCoordinate, Double longitudeCoordinate, GpxData gpxData) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.route = route;
+        this.latitudeCoordinate = latitudeCoordinate;
+        this.longitudeCoordinate = longitudeCoordinate;
+        this.gpxData = gpxData;
     }
 
     public Long getId() {
@@ -47,28 +52,28 @@ public class ControlPoint extends PanacheEntityBase {
         this.name = name;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public Double getLatitudeCoordinate() {
+        return latitudeCoordinate;
     }
 
-    public void setLatitude(Double latitudeCoordinate) {
-        this.latitude = latitudeCoordinate;
+    public void setLatitudeCoordinate(Double latitudeCoordinate) {
+        this.latitudeCoordinate = latitudeCoordinate;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public Double getLongitudeCoordinate() {
+        return longitudeCoordinate;
     }
 
-    public void setLongitude(Double longitudeCoordinate) {
-        this.longitude = longitudeCoordinate;
+    public void setLongitudeCoordinate(Double longitudeCoordinate) {
+        this.longitudeCoordinate = longitudeCoordinate;
     }
 
-    public Route getRoute() {
-        return route;
+    public GpxData getGpxData() {
+        return gpxData;
     }
 
-    public void setRoute(Route route) {
-        this.route = route;
+    public void setGpxData(GpxData gpxData) {
+        this.gpxData = gpxData;
     }
 
     @Override
@@ -76,7 +81,7 @@ public class ControlPoint extends PanacheEntityBase {
         return "ControlPoint{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", latitudeCoordinate=" + latitude +
-                ", longitudeCoordinate=" + longitude +'}';
+                ", latitudeCoordinate=" + latitudeCoordinate +
+                ", longitudeCoordinate=" + longitudeCoordinate +'}';
     }
 }

@@ -56,6 +56,7 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
     public List<Coordinates> getAllCoordinates() {
         return findAll()
                 .stream()
+                .filter(c -> !c.isIgnore())
                 .collect(Collectors.toList());
     }
 
@@ -73,6 +74,7 @@ public class CoordinatesRepository implements PanacheRepository<Coordinates> {
             coordinates.setLongitude(longitude);
             coordinates.setLatitude(latitude);
             coordinates.setGpxData(gpxData);
+            coordinates.setIgnore(false);
 
             persist(coordinates);
 

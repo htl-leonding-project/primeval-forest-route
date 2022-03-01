@@ -1,8 +1,5 @@
 package at.htl.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
@@ -31,6 +28,8 @@ public class Coordinates {
     @ManyToOne
     @JoinTable(name = "GPXDATA_COORDINATES_LINK")
     GpxData gpxData;
+
+    private boolean ignore;
 
     public Coordinates() {
     }
@@ -92,6 +91,18 @@ public class Coordinates {
 
     public void setGpxData(GpxData gpxData) {
         this.gpxData = gpxData;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isIgnore() {
+        return ignore;
+    }
+
+    public void setIgnore(boolean ignore) {
+        this.ignore = ignore;
     }
 
     @Override

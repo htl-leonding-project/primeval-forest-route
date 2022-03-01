@@ -8,6 +8,47 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+  <div class="header">
+    <h1>ForestTrail</h1>
+    <div class="nav-points">
+      <h2>Routes</h2>
+      <h2>About</h2>
+      <h2>Contact</h2>
+    </div>
+  </div>
+  <div class="devider">
+    <!--<div class="custom-shape-divider-top-1645178364">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+      </svg>
+    </div>
+    <div class="custom-shape-divider-top-1645178793">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+      </svg>
+    </div>-->
+    <div class="image_container">
+      <div class="over_image_layer">
+        <h1>FORESTTRAIL</h1>
+      </div>
+    </div>
+
+  </div>
+
   <app-root></app-root>
+
+  <div class="footer">
+
+  </div>
 </body>
+<script>
+  const navbar = document.querySelector('.header');
+  window.onscroll = () => {
+    if (window.scrollY > 10) {
+      navbar.classList.add('header-active');
+    } else {
+      navbar.classList.remove('header-active');
+    }
+  };
+</script>
 </html>
