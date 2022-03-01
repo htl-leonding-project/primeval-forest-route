@@ -26,6 +26,7 @@ public class PictureResource {
 
     @GET
     @Path("getImageById/{id}")
+    @Produces("image/jpeg")
     public Response getImageById(@PathParam("id") Long id) {
         File file = repo.getPictureById(id);
         System.out.println(file);

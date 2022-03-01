@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade;
 
 import org.hibernate.annotations.CascadeType;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +21,7 @@ public class Route extends PanacheEntityBase {
 
     @ManyToOne
     @Cascade(CascadeType.ALL)
+    @JsonbTransient
     private GpxData gpxData;
 
     public Route() {

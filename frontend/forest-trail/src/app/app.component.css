@@ -1,4 +1,23 @@
+body {
+  margin: auto;
+  padding: 0;
+}
+
 .map {
   height: 100%;
   padding: 0;
 }
+
+
+/*
+.page-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#mountain_pic {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}*/

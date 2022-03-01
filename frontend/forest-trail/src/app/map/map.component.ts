@@ -1,7 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
+import {Component, AfterViewInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import * as L from 'leaflet';
 import { MarkerService } from '../marker.service';
-import {GpxdataDto} from "../gpxdata-dto";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {ControlPointDto} from "../controlpoint-dto";
+import {PictureDto} from "../picture-dto";
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const greenImgMarker = 'assets/green-marker.png';
@@ -18,22 +20,22 @@ const iconDefault = L.icon({
   shadowSize: [41, 41]
 });
 L.Marker.prototype.options.icon = iconDefault;
+const imgUrl = "http://localhost:8080/api/picture/getImageById/";
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnChanges {
 
   private map: any;
-  private check: Boolean = false;
+
+  @Input()
+  img: PictureDto = {};
 
   @Input()
   cpFromImg: ControlPointDto = {}
-
-  @Input()
-  blob: any;
 
   constructor(private markerService: MarkerService,
               private readonly sanitizer: DomSanitizer) {}
@@ -41,7 +43,7 @@ export class MapComponent implements AfterViewInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [ 54.32832, 13.462928 ],
-      zoom: 7.5
+      zoom: 9
     });
 
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -50,26 +52,16 @@ export class MapComponent implements AfterViewInit {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
 
+
     tiles.addTo(this.map);
-    this.check = true;
   }
 
   updateMap() {
-    console.log(this.cpFromImg);
-    var url: SafeUrl = "";
-    // if (this.cpFromImg.latitude != null && this.cpFromImg.longitude != null) {
 
-      // L.marker([ this.cpFromImg.latitude!, this.cpFromImg.longitude! ]).remove();
-    this.displayImage().then(
-      value => {
-        console.log(value);
-        url = value
-      }
-    );
-    console.log(url);
-
-    console.log(this.cpFromImg);
-    console.log(this.cpFromImg.latitude);
+    if (this.img.id == null || this.cpFromImg.id == null) {
+      return
+    }
+    var url = imgUrl + "" + this.img.id!;
     L.marker([ this.cpFromImg.latitude!, this.cpFromImg.longitude! ], {
         icon: L.icon({
           iconSize: [ 25, 41 ],
@@ -79,27 +71,25 @@ export class MapComponent implements AfterViewInit {
         })
       })
       .addTo(this.map)
-      .bindPopup(`
-            <img src="${url}" alt="img" style="width: 5%">
-        `)
+      .bindPopup(
+        `<img src="${url}" alt="img" style="width: 300%">`,
+        {}
+      )
       .openPopup();
-
-    //} else {
-     // console.log("Did not find coordinates of CP");
-    //}
-  }
-
-  async displayImage(): Promise<SafeUrl> {
-    let objectURL = URL.createObjectURL(this.blob);
-    return this.sanitizer.bypassSecurityTrustUrl(objectURL);
   }
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.markerService.makeControlpointMarker(this.map, 0)
+    this.markerService.makeControlpointMarker(this.map);
   }
 
-  changeMapView(id: GpxdataDto): void {
-    this.markerService.makeControlpointMarker(this.map, id.id);
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const change1 in changes) {
+      if (change1 == 'img' || change1 == 'cpFromImg') {
+        if (!changes[change1].firstChange) {
+          this.updateMap()
+        }
+      }
+    }
   }
 }

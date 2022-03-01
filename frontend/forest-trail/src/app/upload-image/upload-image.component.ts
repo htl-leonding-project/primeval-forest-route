@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
 import {PictureDto} from "../picture-dto";
 import {ControlPointDto} from "../controlpoint-dto";
+import {MapComponent} from "../map/map.component";
 
 @Component({
   selector: 'app-upload-image',
@@ -14,11 +15,11 @@ export class UploadImageComponent {
   message = '';
   fileValid: boolean = false;
 
-  sentImg: PictureDto = {};
-  file: any;
-
   @Output()
-  img: EventEmitter<any> = new EventEmitter<any>();
+  sentImg: PictureDto = {};
+
+  @ViewChild(MapComponent)
+  mapComp!: MapComponent;
 
   @Output()
   cp: ControlPointDto = {}
@@ -27,6 +28,7 @@ export class UploadImageComponent {
   }
 
   processFile(imageInput: any) {
+    this.fileValid = false;
     const file: File = imageInput.files[0];
     const reader = new FileReader();
 
@@ -49,7 +51,6 @@ export class UploadImageComponent {
           this.service.getImage(this.sentImg.id).subscribe(
             f => {
               console.log(f)
-              this.file = f
               this.getCpId().then(value => {
                 console.log(value);
                 this.cp = value
