@@ -76,4 +76,19 @@ export class QuarkusBackendService {
       `${this.baseUrl}/gpx/id/${id}`
     )
   }
+
+  uploadXml(file: File, routeName: string): Promise<GpxdataDto> {
+    console.log(file);
+    return this.http.post<GpxdataDto>(
+      `${this.baseUrl}/gpx/uploadGPX/${routeName}`,
+      file,
+      {responseType: "json"}).toPromise();
+  }
+
+  uploadRoute(route: RouteDto, gpxId: number): Promise<RouteDto> {
+    return this.http.post<RouteDto>(
+      `${this.baseUrl}/route/uploadRouteWithGpxId/${gpxId}`,
+      route,
+      {responseType: "json"}).toPromise();
+  }
 }

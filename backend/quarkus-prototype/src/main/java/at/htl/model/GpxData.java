@@ -31,6 +31,8 @@ public class GpxData {
 
     private String name;
 
+    private String path;
+
     @OneToMany(mappedBy = "gpxData", fetch = FetchType.EAGER, cascade={CascadeType.PERSIST,  CascadeType.REMOVE})
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Coordinates> routePoints = new ArrayList<>();
@@ -48,6 +50,11 @@ public class GpxData {
 
     public GpxData(String name) {
         this.name = name;
+    }
+
+    public GpxData(String name, String path) {
+        this.name = name;
+        this.path = path;
     }
 
     public GpxData(String name, List<Coordinates> routePoints) {
@@ -85,6 +92,14 @@ public class GpxData {
 
     public void setControlPoints(List<ControlPoint> controlPoints) {
         this.controlPoints = controlPoints;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

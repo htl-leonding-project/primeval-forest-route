@@ -1,27 +1,32 @@
 package at.htl.controller;
 
+import at.htl.model.GpxData;
 import at.htl.model.Route;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RouteRepository implements PanacheRepository<Route> {
 
+    final GpxDataRepository gpxDataRepository = new GpxDataRepository();
+
+    public final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     @Transactional
-    public void save(Route route) {
+    public Route save(Route route) {
         if (route != null) {
-            route.persist();
+            return this.getEntityManager().merge(route);
         }
+        return null;
     }
 
     public List<Route> getAllRoutes() {
@@ -101,5 +106,21 @@ public class RouteRepository implements PanacheRepository<Route> {
 
         return fileData;*/
 
+    }
+
+    @Transactional
+    public Route saveRouteWithGpxId(Route route, Long gpxId) {
+        try {
+            GpxData gpxData = this.gpxDataRepository.findById(gpxId);
+            Route routeToSave = new Route(
+                    route.getName(),
+                    route.getLength(),
+                    gpxData
+            );
+            return this.save(routeToSave);
+        }catch (Exception e){
+            logger.log(Level.WARNING, e.getMessage());
+            return null;
+        }
     }
 }

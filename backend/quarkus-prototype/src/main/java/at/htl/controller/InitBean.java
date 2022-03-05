@@ -20,11 +20,11 @@ public class InitBean {
     GpxDataRepository gpxDataRepository;
 
     void onStart(@Observes StartupEvent event) {
-        try {
+        /*try {
             gpxDataRepository.persistGpx();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        routeRepository.persistRoute();
+        routeRepository.persistRoute();*/
     }
 }

@@ -1,23 +1,30 @@
 package at.htl.controller;
 
-import at.htl.model.ControlPoint;
-import at.htl.model.Coordinates;
-import at.htl.model.GpxData;
+import at.htl.model.*;
 import io.jenetics.jpx.GPX;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class GpxDataRepository implements PanacheRepository<GpxData> {
+
+    @ConfigProperty(name = "efr.xml.path")
+    String imagePath;
 
     @Inject
     CoordinatesRepository coordinatesRepository;
@@ -27,6 +34,8 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
     @Inject
     EntityManager em;
+
+    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public static String[] allPaths = getAllPathsOfRoutes();
 
@@ -122,5 +131,24 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     private static String[] getAllPathsOfRoutes() {
         return new String[]{"../src/main/resources/route/route1.gpx",
                 "../src/main/resources/route/route2.gpx"};
+    }
+
+    public GpxData uploadXml(InputStream xml, String routeName) {
+        var path = new File(
+                imagePath,
+                routeName + ".gpx"
+        );
+        System.out.println(path.getName());
+        try(var os = new FileOutputStream(path)) {
+            xml.transferTo(os);
+            GpxData gpxData = new GpxData(
+                    routeName,
+                    imagePath
+            );
+            return this.getEntityManager().merge(gpxData);
+        } catch (IOException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return null;
+        }
     }
 }

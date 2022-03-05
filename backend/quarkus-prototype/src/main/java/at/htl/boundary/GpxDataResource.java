@@ -1,16 +1,17 @@
 package at.htl.boundary;
 
 import at.htl.controller.GpxDataRepository;
+import at.htl.model.ImageMultipartBody;
+import at.htl.model.Route;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import javax.ws.rs.Produces;
+import java.io.InputStream;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.Consumes;
 
 @Path("gpx")
 @Produces(MediaType.APPLICATION_JSON)
@@ -48,6 +49,17 @@ public class GpxDataResource {
     @Path("/points/name/{name}")
     public Response getControlPointsListByName(@PathParam("name") String name) {
         return Response.ok(gpxDataRepository.getControlPointListByName(name)).build();
+    }
+
+    @POST
+    @Transactional
+    @Path("/uploadGPX/{route-name}")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response create(InputStream xml, @PathParam("route-name") String routeName) {
+        System.out.println(xml);
+        return Response.ok(
+                gpxDataRepository.uploadXml(xml, routeName)
+        ).build();
     }
 
     @GET

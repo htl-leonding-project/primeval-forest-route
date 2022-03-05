@@ -21,7 +21,7 @@ public class Coordinates {
     private Double longitude;
     private Double latitude;
 
-    @JsonbDateFormat("dd/MM/yyyy")
+    @JsonbDateFormat("yyyy:MM:dd")
     private Date date;
 
     @JsonbTransient
