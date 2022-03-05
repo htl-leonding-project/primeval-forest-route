@@ -4,12 +4,10 @@
   margin-left: 10%;
   z-index: -1;
 }
-
 .map-frame {
   height: 100%;
   width: 90%;
 }
-
 #map {
   height: 100%;
   margin-top: 4vh;

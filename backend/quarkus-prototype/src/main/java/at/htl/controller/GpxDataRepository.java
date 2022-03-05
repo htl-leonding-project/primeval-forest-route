@@ -40,7 +40,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     public static String[] allPaths = getAllPathsOfRoutes();
 
     @Transactional
-    public void persistGpx() throws IOException {
+    public void persistGpxFromStart() throws IOException {
         for (String allPath : allPaths) {
             GpxData gpxData = parseGpxData(allPath);
             persist(gpxData);
@@ -53,6 +53,20 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
             gpxData.setControlPoints(points);
             em.merge(gpxData);
         }
+    }
+
+    @Transactional
+    public void persistGpxFromUpload(String path) throws IOException {
+        GpxData gpxData = parseGpxData(path);
+        persist(gpxData);
+
+        List<Coordinates> coords = persistCoordinates(path, gpxData);
+        gpxData.setRoutePoints(coords);
+        em.merge(gpxData);
+
+        List<ControlPoint> points = controlPointRepository.persistControlPoints(gpxData);
+        gpxData.setControlPoints(points);
+        em.merge(gpxData);
     }
 
     @Transactional
