@@ -157,3 +157,6 @@ a {
 .custom-shape-divider-top-1645178793 .shape-fill {
   fill: rgba(0, 0, 0, 0.39);
 }*/
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

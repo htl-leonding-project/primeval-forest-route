@@ -56,17 +56,13 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     }
 
     @Transactional
-    public void persistGpxFromUpload(String path) throws IOException {
+    public GpxData persistGpxFromUpload(String path) throws IOException {
         GpxData gpxData = parseGpxData(path);
         persist(gpxData);
 
-        List<Coordinates> coords = persistCoordinates(path, gpxData);
+        List<Coordinates> coords = persistCoordinates(gpxData.getPath(), gpxData);
         gpxData.setRoutePoints(coords);
-        em.merge(gpxData);
-
-        List<ControlPoint> points = controlPointRepository.persistControlPoints(gpxData);
-        gpxData.setControlPoints(points);
-        em.merge(gpxData);
+        return em.merge(gpxData);
     }
 
     @Transactional
@@ -129,7 +125,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
         name = gpx.getTracks().get(0).getName().get();
 
-        return new GpxData(name);
+        return new GpxData(name, path);
     }
 
     @Transactional
@@ -147,6 +143,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
                 "../src/main/resources/route/route2.gpx"};
     }
 
+    @Transactional
     public GpxData uploadXml(InputStream xml, String routeName) {
         var path = new File(
                 imagePath,
@@ -159,7 +156,8 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
                     routeName,
                     imagePath
             );
-            return this.getEntityManager().merge(gpxData);
+
+            return persistGpxFromUpload(imagePath + "/" + routeName + ".gpx");
         } catch (IOException e) {
             logger.log(Level.WARNING, e.getMessage());
             return null;
