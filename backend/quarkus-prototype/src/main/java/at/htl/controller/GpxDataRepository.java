@@ -152,10 +152,6 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
         System.out.println(path.getName());
         try(var os = new FileOutputStream(path)) {
             xml.transferTo(os);
-            GpxData gpxData = new GpxData(
-                    routeName,
-                    imagePath
-            );
 
             return persistGpxFromUpload(imagePath + "/" + routeName + ".gpx");
         } catch (IOException e) {
