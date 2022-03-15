@@ -1,0 +1,47 @@
+<div>
+
+  <h1>Forest Routes</h1>
+
+  <div class="new-route-container">
+    <h3>new route</h3>
+
+    <form [formGroup]="routeForm" (ngSubmit)="uploadXmlFile()">
+
+      <input type="text" placeholder="route name" formControlName="name">
+
+      <input type="number" placeholder="route length" formControlName="length">
+
+      <label class="btn btn-default">
+        <input #xmlInput type="file" formControlName="file" accept="application/gpx" (change)="processFile(xmlInput)">
+      </label>
+
+
+
+      <h3>Add controlpoints to route</h3>
+      <input #csvInput type="file" formControlName="file" accept="text/csv" (change)="processCsv(csvInput)">
+      <strong>
+        <p>Please consider following .csv format:</p>
+      </strong>
+        <p>
+          Name;Breitengrad;Laengengrad
+        </p>
+
+      <button
+        mat-raised-button
+        class="btn btn-success"
+        [disabled]="this.fileValid == false">
+        Upload Route
+      </button>
+    </form>
+
+  </div>
+  <div class="routes-container">
+    <ul *ngIf="uploadedRoutes != []">
+      <li *ngFor="let route of uploadedRoutes">
+        {{route.id}}: {{route.name}}
+      </li>
+    </ul>
+  </div>
+  <button mat-button (click)="dialogRef.close()">close</button>
+</div>
+

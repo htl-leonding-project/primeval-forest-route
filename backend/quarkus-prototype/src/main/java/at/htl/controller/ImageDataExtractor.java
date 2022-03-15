@@ -26,7 +26,8 @@ public class ImageDataExtractor {
 
                     return new Coordinates(
                             gpsDir.getGeoLocation().getLongitude(),
-                            gpsDir.getGeoLocation().getLatitude()
+                            gpsDir.getGeoLocation().getLatitude(),
+                            gpsDir.getGpsDate()
                     );
 
                 } else throw new IllegalArgumentException("The image have no geocoordinates!");

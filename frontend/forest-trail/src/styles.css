@@ -1,1 +1,176 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  scroll-behavior: smooth;
+}
+.header {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  min-height: 10vh;
+  margin: 0px;
+  z-index: 12;
+  transition: ease-in-out 0.3s;
+  padding-left: 10%;
+  padding-right: 10%;
+  align-items: center;
+}
+.header-active {
+  background-color: rgba(58, 58, 58, 1);
+  box-shadow: 0px 4px 6px rgba(58, 58, 58, 0.3);
+  padding-left: 8.5%;
+  padding-right: 8.5%;
+  width: 83%;
+  z-index: 100;
+}
+#routes {
+  position: absolute;
+  top: 91%;
+  left: 50%;
+}
+.header h1 {
+  color: white;
+  margin:0px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  font-size: 2.8vw;
+}
+.nav-points {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  width: 30%;
+  margin: 0px;
+}
+.nav-points h2 {
+  font-size: 1.5vw;
+  color: white;
+}
+.devider {
+  position: relative;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 0px;
+}
+.image_container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("assets/jungle_01.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.over_image_layer {
+  position: absolute;
+  height: 78vh;
+  width: 87.5%;
+  z-index: 5;
+  left: 6.25%;
+  top: 11vh;
+  background-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 4.2vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.over_image_layer h1 {
+  letter-spacing: 0.15em;
+}
+body {
+  margin: 0px;
+  font-family: 'Trebuchet MS', sans-serif;
+  user-select: none;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+.content-index {
+  width: 100%;
+  min-height: 50vh;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+.content-index h2 {
+  color: black;
+  text-align: center;
+}
+.footer {
+  width: 100%;
+  min-height: 1vh;
+  background-color: rgba(58, 58, 58, 0.95);
+  padding-top: 8vh;
+  padding-bottom:1vh;
+  text-align: center;
+  color: white;
+}
+
+
+
+
+/** devider **/
+/*.custom-shape-divider-top-1645178364 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 10;
+}
+
+.custom-shape-divider-top-1645178364 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 22px;
+  transform: rotateY(180deg);
+  z-index: 10;
+}
+
+.custom-shape-divider-top-1645178364 .shape-fill {
+  fill: #082E05;
+}
+.custom-shape-divider-top-1645178793 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  z-index: 9;
+}
+
+.custom-shape-divider-top-1645178793 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 25px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1645178793 .shape-fill {
+  fill: rgba(0, 0, 0, 0.39);
+}*/
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.logo {
+  display: flex;
+  justify-content: space-between;
+}
+.logo img {
+  width: 3vw;
+  height: 3vw;
+  padding-top: 1.8vh;
+  padding-bottom: 1.8vh;
+  margin-right: 2vh;
+}

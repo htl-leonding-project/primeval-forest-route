@@ -5,7 +5,9 @@ import at.htl.model.Route;
 
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.net.URI;
 
 @Path("route")
@@ -41,6 +43,15 @@ public class RouteResource {
         route.setName(routeUpdated.getName());
 
         return route;
+    }
+
+    @POST
+    @Transactional
+    @Path("/uploadRouteWithGpxId/{gpxId}")
+    public Response uploadRouteWithGpxId(Route route, @PathParam("gpxId") Long gpxId) {
+        return Response.ok(
+                routeRepository.saveRouteWithGpxId(route, gpxId)
+        ).build();
     }
 
     @GET

@@ -33,6 +33,12 @@ public class Route extends PanacheEntityBase {
         this.length = length;
     }
 
+    public Route(String name, Double length, GpxData gpxData) {
+        this.name = name;
+        this.length = length;
+        this.gpxData = gpxData;
+    }
+
     public Long getCsvId() {
         return csvId;
     }

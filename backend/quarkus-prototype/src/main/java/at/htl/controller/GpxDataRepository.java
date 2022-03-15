@@ -1,42 +1,69 @@
 package at.htl.controller;
 
-import at.htl.model.Coordinates;
-import at.htl.model.GpxData;
+import at.htl.model.*;
 import io.jenetics.jpx.GPX;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class GpxDataRepository implements PanacheRepository<GpxData> {
 
+    @ConfigProperty(name = "efr.xml.path")
+    String imagePath;
+
     @Inject
     CoordinatesRepository coordinatesRepository;
 
     @Inject
+    ControlPointRepository controlPointRepository;
+
+    @Inject
     EntityManager em;
 
-    public static String[] allPaths = getAllPathsOfRoutes();
+    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+    List<String> allPaths = getAllPathsOfRoutes();
 
     @Transactional
-    public void persistGpx() throws IOException {
+    public void persistGpxFromStart() throws IOException {
         for (String allPath : allPaths) {
             GpxData gpxData = parseGpxData(allPath);
             persist(gpxData);
 
             List<Coordinates> coords = persistCoordinates(allPath, gpxData);
             gpxData.setRoutePoints(coords);
-            //System.out.println(coords.get(1));
+            em.merge(gpxData);
+
+            List<ControlPoint> points = controlPointRepository.persistControlPoints(gpxData);
+            gpxData.setControlPoints(points);
             em.merge(gpxData);
         }
+    }
+
+    @Transactional
+    public GpxData persistGpxFromUpload(String path) throws IOException {
+        GpxData gpxData = parseGpxData(path);
+        persist(gpxData);
+
+        List<Coordinates> coords = persistCoordinates(gpxData.getPath(), gpxData);
+        gpxData.setRoutePoints(coords);
+        return em.merge(gpxData);
     }
 
     @Transactional
@@ -48,11 +75,27 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
     }
 
     @Transactional
+    public List<ControlPoint> getControlPointListById(Long i) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findById", GpxData.class)
+                .setParameter("INT", i);
+        GpxData gpxData = query.getSingleResult();
+        return gpxData.getControlPoints();
+    }
+
+    @Transactional
     public List<Coordinates> getCoordinateListByName(String name) {
         TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
                 .setParameter("NAME", name);
         GpxData gpxData = query.getSingleResult();
         return gpxData.getRoutePoints();
+    }
+
+    @Transactional
+    public List<ControlPoint> getControlPointListByName(String name) {
+        TypedQuery<GpxData> query = em.createNamedQuery("GpxData.findByName", GpxData.class)
+                .setParameter("NAME", name);
+        GpxData gpxData = query.getSingleResult();
+        return gpxData.getControlPoints();
     }
 
     @Transactional
@@ -83,7 +126,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
         name = gpx.getTracks().get(0).getName().get();
 
-        return new GpxData(name);
+        return new GpxData(name, path);
     }
 
     @Transactional
@@ -96,9 +139,31 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
         return coordinatesList;
     }
 
-    private static String[] getAllPathsOfRoutes() {
-        return new String[]{"../src/main/resources/route/route1.gpx",
-                "../src/main/resources/route/route2.gpx",
-                "../src/main/resources/route/route3.gpx"};
+    private List<String> getAllPathsOfRoutes() {
+        TypedQuery<GpxData> query = this.getEntityManager().createQuery(
+                "select g from GpxData g", GpxData.class
+        );
+        return query.getResultList().stream()
+                .map(GpxData::getPath)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public GpxData uploadXml(InputStream xml, String routeName) {
+        var path = new File(
+                imagePath,
+                routeName + ".gpx"
+        );
+        System.out.println(path.getName());
+        try(var os = new FileOutputStream(path)) {
+            xml.transferTo(os);
+
+            GpxData gpxData = persistGpxFromUpload(imagePath + "/" + routeName + ".gpx");
+
+            return gpxData;
+        } catch (IOException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return null;
+        }
     }
 }

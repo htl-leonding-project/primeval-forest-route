@@ -1,6 +1,6 @@
 export interface ControlPointDto {
   id?: number | null,
-  latitude?: number | null,
-  longitude?: number | null,
+  latitudeCoordinate?: number | null,
+  longitudeCoordinate?: number | null,
   name?: string | null
 }

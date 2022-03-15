@@ -1,0 +1,12 @@
+<h2>CHOOSE A ROUTE</h2>
+
+<div class="center">
+  <select *ngIf="routes !== null" [(ngModel)]="selectedRoute.id" (change)="changesOfSelection()">
+    <option *ngFor="let route of routes"
+            [value]="route.id"
+            name="fieldName" ngDefaultControl>
+      {{route.name}}
+    </option>
+  </select>
+</div>
+

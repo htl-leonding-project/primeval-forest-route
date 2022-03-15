@@ -5,7 +5,7 @@ import io.quarkus.runtime.StartupEvent;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import java.io.IOException;
+import java.util.Arrays;
 
 @ApplicationScoped
 public class InitBean {
@@ -20,12 +20,12 @@ public class InitBean {
     GpxDataRepository gpxDataRepository;
 
     void onStart(@Observes StartupEvent event) {
-        try {
-            gpxDataRepository.persistGpx();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        routeRepository.persistRoute();
-        controlPointRepository.persistControlPoints();
-    }
+//        try {
+//            gpxDataRepository.persistGpxFromStart();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        routeRepository.persistRoute();
+        System.out.println(Arrays.toString(controlPointRepository.readDataFromFile("/uploadedCsv/controlpoints_route1.csv").get(0)));
+     }
 }

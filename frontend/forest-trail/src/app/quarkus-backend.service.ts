@@ -64,4 +64,40 @@ export class QuarkusBackendService {
       `${this.baseUrl}/controlPoint/all`
     )
   }
+
+  getControlPointsById(id: number | null | undefined): Observable<ControlPointDto[]> {
+    return this.http.get<ControlPointDto[]>(
+      `${this.baseUrl}/gpx/points/${id}`
+    )
+  }
+
+  getCoordinatesById(id: number | null | undefined): Observable<CoordinatesDto[]> {
+    return this.http.get<CoordinatesDto[]>(
+      `${this.baseUrl}/gpx/id/${id}`
+    )
+  }
+
+  uploadXml(file: File, routeName: string): Promise<GpxdataDto> {
+    console.log(file);
+    return this.http.post<GpxdataDto>(
+      `${this.baseUrl}/gpx/uploadGPX/${routeName}`,
+      file,
+      {responseType: "json"}).toPromise();
+  }
+
+  uploadRoute(route: RouteDto, gpxId: number): Promise<RouteDto> {
+    return this.http.post<RouteDto>(
+      `${this.baseUrl}/route/uploadRouteWithGpxId/${gpxId}`,
+      route,
+      {responseType: "json"}).toPromise();
+  }
+
+  uploadCsv(csvFile: File, gpxId: number): Promise<string> {
+    console.log(gpxId);
+    console.log(csvFile);
+    return this.http.post<string>(
+      `${this.baseUrl}/controlPoint/import-cp-csv/${gpxId}`,
+      csvFile
+    ).toPromise()
+  }
 }

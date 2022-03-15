@@ -3,4 +3,5 @@ export interface RouteDto {
     csvId?: number | null;
     name?: string | null;
     length?: number | null;
+    gpxId?: number | null;
 }

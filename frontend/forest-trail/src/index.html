@@ -6,8 +6,76 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+  <div class="header">
+    <div class="logo">
+      <img src="assets/EUR_Logo.gif">
+      <h1>ForestTrail</h1>
+    </div>
+    <div class="nav-points">
+      <h2><a href="#routes">Routes</a></h2>
+      <h2>About</h2>
+      <h2>Contact</h2>
+    </div>
+  </div>
+  <div class="devider">
+    <!--<div class="custom-shape-divider-top-1645178364">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+      </svg>
+    </div>
+    <div class="custom-shape-divider-top-1645178793">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+      </svg>
+    </div>-->
+    <div class="image_container">
+      <div class="over_image_layer">
+        <h1>FORESTTRAIL</h1>
+      </div>
+      <div id="routes">
+      </div>
+    </div>
+  </div>
+
   <app-root></app-root>
+
+<!--  <div class="content-index">-->
+<!--    <div class="center-container">-->
+<!--      <div class="bild1"></div>-->
+<!--        <div class="about-text">-->
+<!--          <p>-->
+<!--            Es geht um den Europäischen Urwald, welcher geschützt werden soll.-->
+<!--            Dafür entwickelt unser Team eine Applikation um die Rodungen des Urwalds vermindern-->
+<!--            und den Einwohnern vorort eine größere Touristenverkehr zu bieten.-->
+
+<!--            Sie können in unserer Applikation ein Fotoalbum aus ihren gesammelten Bildern erstellen,-->
+<!--            welche auf der Karte, zu den Orten an denen sie gemacht worden sind, angezeigt werden.-->
+<!--          </p>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="content-index">-->
+<!--    <h2>Contact</h2>-->
+<!--  </div>-->
+
+  <div class="footer">
+    <p>©ForestTrail 2022</p>
+  </div>
 </body>
+<script>
+  const navbar = document.querySelector('.header');
+  window.onscroll = () => {
+    if (window.scrollY > 10) {
+      navbar.classList.add('header-active');
+    } else {
+      navbar.classList.remove('header-active');
+    }
+  };
+</script>
 </html>
