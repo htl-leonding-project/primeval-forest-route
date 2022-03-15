@@ -15,6 +15,17 @@
         <input #xmlInput type="file" formControlName="file" accept="application/gpx" (change)="processFile(xmlInput)">
       </label>
 
+
+
+      <h3>Add controlpoints to route</h3>
+      <input #csvInput type="file" formControlName="file" accept="text/csv" (change)="processCsv(csvInput)">
+      <strong>
+        <p>Please consider following .csv format:</p>
+      </strong>
+        <p>
+          Name;Breitengrad;Laengengrad
+        </p>
+
       <button
         mat-raised-button
         class="btn btn-success"
@@ -22,6 +33,7 @@
         Upload Route
       </button>
     </form>
+
   </div>
   <div class="routes-container">
     <ul *ngIf="uploadedRoutes != []">

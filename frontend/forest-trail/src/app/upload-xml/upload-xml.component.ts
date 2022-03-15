@@ -1,7 +1,6 @@
-import {Component, OnChanges, SimpleChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {QuarkusBackendService} from "../quarkus-backend.service";
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {MatInput} from '@angular/material/input';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {RouteDto} from "../route-dto";
 import {GpxdataDto} from "../gpxdata-dto";
@@ -52,6 +51,7 @@ export class DialogRouteWindow {
   gpxData: GpxdataDto = {}
 
   uploadedRoutes: RouteDto[] = [];
+  csvFile?: File;
 
   constructor(
     public dialogRef: MatDialogRef<DialogRouteWindow>,
@@ -84,6 +84,12 @@ export class DialogRouteWindow {
           )
         }
       )
+      if (this.csvFile != null) {
+        await this.service.uploadCsv(this.csvFile, this.gpxData.id!)
+          .then(s => {
+            console.log(s);
+          })
+      }
     }
   }
 
@@ -97,5 +103,9 @@ export class DialogRouteWindow {
       this.fileValid = !this.fileValid;
     });
     reader.readAsDataURL(file);
+  }
+
+  processCsv(csvInput: any) {
+    this.csvFile = csvInput.files[0]
   }
 }

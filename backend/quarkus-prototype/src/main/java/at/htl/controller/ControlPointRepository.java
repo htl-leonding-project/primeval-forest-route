@@ -4,6 +4,7 @@ import at.htl.model.*;
 
 import at.htl.model.ControlPoint;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -16,13 +17,20 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ApplicationScoped
 public class ControlPointRepository implements PanacheRepository<ControlPoint> {
 
+    @ConfigProperty(name = "efr.csv.path")
+    String csvPath;
+
     public static String controlPointsFile = "/controlpoints.csv";
+
+    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     @Transactional
     public void saveControlPoint(ControlPoint controlPoint) {
@@ -104,5 +112,21 @@ public class ControlPointRepository implements PanacheRepository<ControlPoint> {
                 .map(s -> s.split(";"))
                 .collect(Collectors.toUnmodifiableList());
 
+    }
+
+    public String importCsvCp(InputStream is, Long id) {
+        var path = new File(
+                csvPath,
+                "controlpoints_route_" + id
+        );
+
+        try(var os = new FileOutputStream(path)) {
+            is.transferTo(os);
+
+            return String.format("CSV: %s successfully uploaded ...", path.getName());
+        } catch (IOException e) {
+            logger.log(Level.WARNING, e.getMessage());
+            return "CSV not uploaded.";
+        }
     }
 }
