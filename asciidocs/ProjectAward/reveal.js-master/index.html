@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown data-background-image="./img/pexels-stefan-stefancik-91228.jpg"
+						 data-background-opacity="0.8">
+					<textarea data-template>
+						# FOREST TRAIL
+						by Jakob Ratzenböck & Silvio Kalinke
+					</textarea>
+				</section>
+				<section>
+					<section data-background-image="./img/logging.jpg">
+						<div class="fragment" data-fragment-index="1">
+							<img data-src="./img/red-cross.png">
+						</div>
+					</section>
+					<section data-background-video="./img/hiking01.mp4" data-background-opacity="0.6"
+							 data-background-video-loop data-background-video-muted>
+						<img data-src="./img/EUR_Logo.gif" width="20%">
+						<p class="logo-text">ForestTrail</p>
+					</section>
+				</section>
+				<!--<section>
+					<img data-src="./img/angular-logo.png" width="20%">
+					<img data-src="./img/Docker-Logo.png" width="20%">
+					<img data-src="./img/leaflet-logo.png" width="20%">
+					<img data-src="./img/openstreetmap-logo.png" width="20%">
+					<img data-src="./img/postgresql-logo.png" width="20%">
+					<img data-src="./img/quarkus-logo.png" width="20%">
+				</section>-->
+				<section>
+					<h4>Systemarchitektur</h4>
+					<img data-src="./img/sys_architecture_diagram.png" width="100%">
+				</section>
+				<section data-background-image="./img/map.png" data-background-opacity="0.6">
+					<h1>Live-Demo</h1>
+				</section>
+				<section data-background-image="./img/hiking02.jpg" data-background-opacity="0.6">
+					<h2>Wie geht es weiter?</h2>
+				</section>
+				<section>
+					<h2>Noch Fragen?</h2>
+				</section>
+				<section data-background-image="./img/hiking03.jpg" data-background-opacity="0.6">
+					<h2>Vielen Dank für Ihre Aufmerksamkeit!</h2>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
