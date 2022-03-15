@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
 
     Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public static String[] allPaths = getAllPathsOfRoutes();
+    List<String> allPaths = getAllPathsOfRoutes();
 
     @Transactional
     public void persistGpxFromStart() throws IOException {
@@ -138,9 +139,13 @@ public class GpxDataRepository implements PanacheRepository<GpxData> {
         return coordinatesList;
     }
 
-    private static String[] getAllPathsOfRoutes() {
-        return new String[]{"../src/main/resources/route/route1.gpx",
-                "../src/main/resources/route/route2.gpx"};
+    private List<String> getAllPathsOfRoutes() {
+        TypedQuery<GpxData> query = this.getEntityManager().createQuery(
+                "select g from GpxData g", GpxData.class
+        );
+        return query.getResultList().stream()
+                .map(GpxData::getPath)
+                .collect(Collectors.toList());
     }
 
     @Transactional

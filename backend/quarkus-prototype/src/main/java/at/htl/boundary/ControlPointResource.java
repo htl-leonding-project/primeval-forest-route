@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.InputStream;
 import java.util.LinkedList;
 
 @Path("controlPoint")
@@ -35,5 +36,15 @@ public class ControlPointResource {
     public Response addControlPoint(ControlPoint controlPoint) {
         this.controlPoints.add(controlPoint);
         return Response.ok(controlPoint).build();
+    }
+
+    @POST
+    @Path("import-cp-csv/{gpx-data-id}")
+    @Consumes("application/vnd.ms-excel")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response importCpCsv(InputStream is, @PathParam("gpx-data-id") Long id) {
+        return Response.ok(
+                controlPointRepository.importCsvCp(is, id)
+        ).build();
     }
 }

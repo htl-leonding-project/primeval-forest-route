@@ -91,4 +91,13 @@ export class QuarkusBackendService {
       route,
       {responseType: "json"}).toPromise();
   }
+
+  uploadCsv(csvFile: File, gpxId: number): Promise<string> {
+    console.log(gpxId);
+    console.log(csvFile);
+    return this.http.post<string>(
+      `${this.baseUrl}/controlPoint/import-cp-csv/${gpxId}`,
+      csvFile
+    ).toPromise()
+  }
 }
